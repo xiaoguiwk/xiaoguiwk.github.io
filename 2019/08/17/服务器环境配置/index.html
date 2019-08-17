@@ -10,20 +10,20 @@
   
   
 
-  <link rel="shortcut icon" href="/favicon.ico" type="image/png">
-  <meta name="description" content="1.更新1234$ su  #获取管理员权限password: #输入密码$ apt-get update #更新软件列表$ apt-get upgrade #更新软件">
-<meta name="keywords" content="服务器">
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
+  <meta name="description" content="1.更新 $ su  #获取管理员权限password: #输入密码$ apt-get update #更新软件列表$ apt-get upgrade #更新软件">
+<meta name="keywords" content="服务器 环境配置 ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="服务器环境配置">
 <meta property="og:url" content="http://yoursite.com/2019/08/17/服务器环境配置/index.html">
 <meta property="og:site_name" content="xiaogui">
-<meta property="og:description" content="1.更新1234$ su  #获取管理员权限password: #输入密码$ apt-get update #更新软件列表$ apt-get upgrade #更新软件">
+<meta property="og:description" content="1.更新 $ su  #获取管理员权限password: #输入密码$ apt-get update #更新软件列表$ apt-get upgrade #更新软件">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/image.png">
-<meta property="og:updated_time" content="2019-08-17T13:54:44.268Z">
+<meta property="og:updated_time" content="2019-08-17T16:33:16.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器环境配置">
-<meta name="twitter:description" content="1.更新1234$ su  #获取管理员权限password: #输入密码$ apt-get update #更新软件列表$ apt-get upgrade #更新软件">
+<meta name="twitter:description" content="1.更新 $ su  #获取管理员权限password: #输入密码$ apt-get update #更新软件列表$ apt-get upgrade #更新软件">
 <meta name="twitter:image" content="http://yoursite.com/images/image.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566053363349">
+  <link rel="stylesheet" href="/css/style.css?v=1566059754291">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -103,7 +103,7 @@
   <div class="nexmoe-widget-wrap">
     <h3 class="nexmoe-widget-title">Tagcloud</h3>
     <div class="nexmoe-widget tagcloud">
-      <a href="/tags/服务器/" style="font-size: 10px;">服务器</a>
+      <a href="/tags/服务器-环境配置-ubuntu/" style="font-size: 10px;">服务器 环境配置 ubuntu</a>
     </div>
   </div>
 
@@ -131,85 +131,63 @@
         <div class="nexmoe-post">
     <div class="nexmoe-post-cover"> 
         
-            <img src="https://i.loli.net/2019/01/13/5c3aec85a4343.jpg">
+        <img src="https://i.loli.net/2019/07/21/5d33d5dc1531213134.png">
         
         <h1>服务器环境配置</h1>
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月17日</a>
-    <a><i class="nexmoefont icon-areachart"></i>412 字</a>
+    <a><i class="nexmoefont icon-areachart"></i>402 字</a>
     <a><i class="nexmoefont icon-time-circle-fill"></i>大概 2 分钟</a>
     
     
-      <a class="nexmoefont icon-tag-fill -link" href="/tags/服务器/">服务器</a>
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/服务器-环境配置-ubuntu/">服务器 环境配置 ubuntu</a>
     
   </div>
   <article>
-    <h1 id="1-更新"><a href="#1-更新" class="headerlink" title="1.更新"></a>1.更新</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ su  <span class="comment">#获取管理员权限</span></span><br><span class="line">password: <span class="comment">#输入密码</span></span><br><span class="line">$ apt-get update <span class="comment">#更新软件列表</span></span><br><span class="line">$ apt-get upgrade <span class="comment">#更新软件</span></span><br></pre></td></tr></table></figure>
-
+    <h1 id="1-更新"><a href="#1-更新" class="headerlink" title="1.更新"></a>1.更新</h1><blockquote>
+<p>$ su  #获取管理员权限<br>password: #输入密码<br>$ apt-get update #更新软件列表<br>$ apt-get upgrade #更新软件 </p>
+</blockquote>
 <a id="more"></a>
-<h1 id="2-安装redis"><a href="#2-安装redis" class="headerlink" title="2.安装redis"></a>2.安装redis</h1><h2 id="2-1安装Redis"><a href="#2-1安装Redis" class="headerlink" title="2.1安装Redis"></a>2.1安装Redis</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install redis-server -y <span class="comment">#安装redis服务器</span></span><br><span class="line">$ redis-server -v <span class="comment">#查看redis版本</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-2-启动redis"><a href="#2-2-启动redis" class="headerlink" title="2.2 启动redis"></a>2.2 启动redis</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ redis-server <span class="comment">#启动redis服务器</span></span><br><span class="line">$ redis-cli <span class="comment">#启动redis客户端</span></span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line"><span class="comment">#即为连接成功</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-3-后台运行"><a href="#2-3-后台运行" class="headerlink" title="2.3 后台运行"></a>2.3 后台运行</h2><p>1）修改配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
-
+<h1 id="2-安装redis"><a href="#2-安装redis" class="headerlink" title="2.安装redis"></a>2.安装redis</h1><h2 id="2-1安装Redis"><a href="#2-1安装Redis" class="headerlink" title="2.1安装Redis"></a>2.1安装Redis</h2><pre><code>$ apt-get install redis-server -y #安装redis服务器 
+$ redis-server -v #查看redis版本 </code></pre>
+<pre><code>
+## 2.2 启动redis
+``` bash
+$ redis-server #启动redis服务器
+$ redis-cli #启动redis客户端
+127.0.0.1:6379&gt; ping
+PONG
+#即为连接成功</code></pre><h2 id="2-3-后台运行"><a href="#2-3-后台运行" class="headerlink" title="2.3 后台运行"></a>2.3 后台运行</h2><p>1）修改配置文件</p>
+<pre><code class="bash">$ vim /etc/redis/redis.conf</code></pre>
 <p>将daemonize no 改为 yes</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ redis-server redis.conf</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">$ redis-server redis.conf</code></pre>
 <p>结果发现不好使；<br>2）使用守护进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ redis-server &amp;</span><br><span class="line">&lt;打印信息&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">$ redis-server &amp;
+&lt;打印信息&gt;</code></pre>
 <p>Ctrl+C即可后台运行</p>
-<h2 id="2-4-关闭"><a href="#2-4-关闭" class="headerlink" title="2.4 关闭"></a>2.4 关闭</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli shutdown</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-错误处理"><a href="#3-错误处理" class="headerlink" title="3.错误处理"></a>3.错误处理</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Errors were encountered <span class="keyword">while</span> processing:</span><br><span class="line">redis-server</span><br><span class="line">E: Sub-process /usr/bin/dpkg returned an error code (1)</span><br></pre></td></tr></table></figure>
-
+<h2 id="2-4-关闭"><a href="#2-4-关闭" class="headerlink" title="2.4 关闭"></a>2.4 关闭</h2><pre><code class="bash">redis-cli shutdown</code></pre>
+<h1 id="3-错误处理"><a href="#3-错误处理" class="headerlink" title="3.错误处理"></a>3.错误处理</h1><pre><code class="bash">Errors were encountered while processing:
+redis-server
+E: Sub-process /usr/bin/dpkg returned an error code (1)</code></pre>
 <ul>
-<li>解决办法：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /var/lib/dpkg </span><br><span class="line">$ sudo mv info info.bak </span><br><span class="line">$ sudo mkdir info </span><br><span class="line">$ sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>解决办法：<pre><code class="bash">$ cd /var/lib/dpkg 
+$ sudo mv info info.bak 
+$ sudo mkdir info 
+$ sudo apt-get upgrade </code></pre>
+<h1 id="4-更新Python环境"><a href="#4-更新Python环境" class="headerlink" title="4.更新Python环境"></a>4.更新Python环境</h1><pre><code class="bash">$ apt-get upgrade python3</code></pre>
+<h2 id="3-6提示不用更新。。。"><a href="#3-6提示不用更新。。。" class="headerlink" title="3.6提示不用更新。。。"></a>3.6提示不用更新。。。</h2><h1 id="5-Git"><a href="#5-Git" class="headerlink" title="5.Git"></a>5.Git</h1><h1 id="6-Python"><a href="#6-Python" class="headerlink" title="6.Python"></a>6.Python</h1></li>
+<li>安装pip<pre><code>$ apt install python3-pip</code></pre>requests bs4 pandas numpy scrapy aiohttp pymysql(需要先安装mysql)</li>
 </ul>
-<h1 id="4-更新Python环境"><a href="#4-更新Python环境" class="headerlink" title="4.更新Python环境"></a>4.更新Python环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get upgrade python3</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-6提示不用更新。。。"><a href="#3-6提示不用更新。。。" class="headerlink" title="3.6提示不用更新。。。"></a>3.6提示不用更新。。。</h2><h1 id="5-Git"><a href="#5-Git" class="headerlink" title="5.Git"></a>5.Git</h1><h1 id="6-Python"><a href="#6-Python" class="headerlink" title="6.Python"></a>6.Python</h1><ul>
-<li>安装pip<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install python3-pip</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>requests bs4 pandas numpy scrapy aiohttp pymysql(需要先安装mysql)</p>
 <h1 id="7-Lnmp"><a href="#7-Lnmp" class="headerlink" title="7.Lnmp"></a>7.Lnmp</h1><h1 id="8-docker"><a href="#8-docker" class="headerlink" title="8.docker"></a>8.docker</h1><h2 id="8-1-安装"><a href="#8-1-安装" class="headerlink" title="8.1 安装"></a>8.1 安装</h2><ul>
-<li><p>安装以下包以使apt可以通过HTTPS使用存储库（repository）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加Docker官方的GPG密钥：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用下面的命令来设置stable存储库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再更新一下apt包索引：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装最新版本的Docker CE：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y docker-ce</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="8-2-启动"><a href="#8-2-启动" class="headerlink" title="8.2 启动"></a>8.2 启动</h2><ul>
-<li>查看docker服务是否启动：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status docker</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<img src="/images/image.png" title="[center] This is an example image">
-<p>即为已启动，如未启动，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>验证docker服务：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>安装以下包以使apt可以通过HTTPS使用存储库（repository）：<pre><code>$ sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common</code></pre></li>
+<li>添加Docker官方的GPG密钥：<pre><code>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</code></pre></li>
+<li>使用下面的命令来设置stable存储库：<pre><code>$ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</code></pre></li>
+<li>再更新一下apt包索引：<pre><code>$ sudo apt-get update</code></pre></li>
+<li>安装最新版本的Docker CE：<pre><code>$ sudo apt-get install -y docker-ce</code></pre><h2 id="8-2-启动"><a href="#8-2-启动" class="headerlink" title="8.2 启动"></a>8.2 启动</h2></li>
+<li>查看docker服务是否启动：<pre><code>$ systemctl status docker</code></pre><img src="/images/image.png" title="This is an example image">
+即为已启动，如未启动，<pre><code>$ sudo systemctl start docker</code></pre></li>
+<li>验证docker服务：<pre><code>sudo docker run hello-world</code></pre></li>
 </ul>
 
   </article>
@@ -258,7 +236,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566053363353"></script>
+<script src="/js/app.js?v=1566059754295"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
