@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566109476204">
+  <link rel="stylesheet" href="/css/style.css?v=1566109927641">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -144,81 +144,6 @@
         <article>
             
             <p>hexo安装起来倒是挺快的，可是如果想要高程度自定义和美化自己的博客，很多地方都要下功夫。像我这种不懂得前端代码甚至markdown都写的马马虎虎的人，就有点费劲了。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>整个安装过程非常顺利，根据网上的教程和官网文档来做的，大概是以下几个步骤。<br>1.安装并配置git</p>
-<pre><code>brew install git</code></pre><p>2.安装nvm  #用来安装Node.js</p>
-<pre><code>wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sh
-</code></pre><p>3.安装Node.js</p>
-<pre><code>nvm install stable</code></pre><p>4.安装Hexo</p>
-<pre><code>npm install -g hexo-cli</code></pre><p>5.到这里差不多可以启动了，在_config.yml中设置几个参数，就可以启动了。hexo d直接部署。<br>6.域名<br>我到腾讯云买了一个域名xiaoguiwk.xyz年付11块钱。没想到还要实名认证，感觉得需要个三四天了。绑定域名有几个步骤：<br>在GitHub上的xiaoguiwk.github.io项目中，打开settings，往下拉看到Github Pages，在custom domain中填上自己的域名，save。打开腾讯云控制台，解析域名，填上xiaoguiwk.github.io的ip地址。ip的获取方法是ping一下…….</p>
-<p>不过有一点好的是好像是直接就可以用了，可能不直接实名认证的话过几天就上不了了。</p>
-<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>主题采用的是<a href="https://nexmoe.com/hexo-theme-nexmoe.html" target="_blank" rel="noopener">Nexmoe</a>的主题，安装过程比较顺利，主要是安装完成后出现了一点小问题————代码块被识别成为了表格。查来查去没有找到答案，最后在主题GitHub的issue中找到了答案，原来是默认的代码高亮与主题的代码高亮产生了冲突。错误如下图：</p>
-<img src="/images/hexo坑与笔记/1.png" title="代码块错误">
-
-<p>解决办法是关掉默认的代码高亮。<br>打开_config.yml修改如下：</p>
-<pre><code>highlight:
-  enable: false
-  line_number: false
-  auto_detect: false
-  tab_replace:</code></pre><h1 id="文章封面图"><a href="#文章封面图" class="headerlink" title="文章封面图"></a>文章封面图</h1><p>文章封面图的添加比较简单，在创建文章之前找好一张图，记下图片地址。</p>
-<pre><code>$ hexo n &quot;hexo坑与笔记&quot;</code></pre><p>然后打开文章，在顶部添加cover。</p>
-<pre><code>---
-title: hexo坑与笔记
-date: 2019-08-18 13:44:45
-tags: hexo theme
-cover: https://images6.alphacoders.com/766/766327.jpg
----</code></pre><h1 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h1><p><a href="https://www.livere.com" target="_blank" rel="noopener">livere</a>易于设置，步骤如下：</p>
-<ul>
-<li><p>注册livere帐号；</p>
-</li>
-<li><p>安装City版本；</p>
-</li>
-<li><p>复制uid到主题配置文件_config.yml中:</p>
-</li>
-</ul>
-<pre><code>comment: livere
-livere:
-  data_uid: MTAyMC80NjE0OC8yMjY1OQ== </code></pre><p>域名实名认证成功后记得改自己的域名。</p>
-<h1 id="站长统计"><a href="#站长统计" class="headerlink" title="站长统计"></a>站长统计</h1><p>如下：</p>
-<pre><code>analytics: # 统计系统，目前支持 Google analytics.js 统计、Google Tag Manager 统计、CNZZ 统计、腾讯统计、51.La统计、百度统计
-  google_site_id: #&lt;ID&gt;
-  gtags_site_id: #&lt;ID&gt;
-  cnzz_site_id: 1277935893
-  tencent_site_id: #&lt;ID&gt;
-  la_site_id: #&lt;ID&gt;
-  baidu_site_id: #&lt;ID&gt;
-  gtm_container_id: #&lt;ID&gt;</code></pre><p>域名实名认证成功后记得改自己的域名。</p>
-<h1 id="头像与网站icon"><a href="#头像与网站icon" class="headerlink" title="头像与网站icon"></a>头像与网站icon</h1><pre><code>avatar: /images/avatar.png # 网站 Logo
-background: https://i.loli.net/2019/01/13/5c3aec85a4343.jpg # 既是博客的背景，又是文章默认头图
-favicon:
-  href: /images/favicon.ico # 网站图标
-  type: image/png # 图标类型，可能的值有(image/png, image/vnd.microsoft.icon, image/x-icon, image/gif)</code></pre><p>其中，avatar.png是头像，favicon.ico是网站图标。</p>
-<h1 id="插入图片注意事项"><a href="#插入图片注意事项" class="headerlink" title="插入图片注意事项"></a>插入图片注意事项</h1><p>图片插入的格式为:</p>
-<pre><code>{% img /images/hexo坑与笔记/1.png "代码块错误" %}</code></pre><ul>
-<li><p>{% img}是固定的；</p>
-</li>
-<li><p>/images/1.png 是图片的地址，images前面一定要加/，images文件夹放在source文件夹下面；</p>
-</li>
-<li><p>“代码块错误”是图片描述，图挂了会显示</p>
-</li>
-</ul>
-<h1 id="tags设置"><a href="#tags设置" class="headerlink" title="tags设置"></a>tags设置</h1><p>这种方法是成功不了的。。。</p>
-<pre><code>tags: themes hexo</code></pre><p>正确的方法应该是这样设置tags：</p>
-<pre><code>tags:
-  - themes
-  - hexo</code></pre><h1 id="markdown语法坑"><a href="#markdown语法坑" class="headerlink" title="markdown语法坑"></a>markdown语法坑</h1><ul>
-<li><p>列表输入完成之后一定要空行，不然后面全都缩进了；</p>
-</li>
-<li><p>也就是说这一行和上一行在编辑的时候中间有一个空行。</p>
-</li>
-<li><p>markdown的插入图片的方式不适用，如果想用的话需要安装插件。</p>
-</li>
-<li><p>代码块的插入方式有两种，一种是反引号引用，另一种是codeblock，如下：</p>
-</li>
-</ul>
-<pre><code>{% codeblock lang:objc %}
-[rectangle setX: 10 y: 10 width: 20 height: 20];
-{% endcodeblock %}</code></pre><p>其中，lang是指定语言。</p>
-<h1 id="暂时先记这么多吧。"><a href="#暂时先记这么多吧。" class="headerlink" title="暂时先记这么多吧。"></a>暂时先记这么多吧。</h1>
             
         </article>
     </div>
@@ -288,7 +213,7 @@ favicon:
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566109476210"></script>
+<script src="/js/app.js?v=1566109927645"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
