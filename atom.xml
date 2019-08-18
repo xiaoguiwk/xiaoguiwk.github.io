@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>xiaogui</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://xiaoguiwk.xyz/"/>
+  <updated>2019-08-18T08:10:07.982Z</updated>
+  <id>http://xiaoguiwk.xyz/</id>
+  
+  <author>
+    <name>xiaoguiwk</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo坑与笔记</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/18/hexo%E5%9D%91%E4%B8%8E%E7%AC%94%E8%AE%B0/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/18/hexo坑与笔记/</id>
+    <published>2019-08-18T05:44:45.000Z</published>
+    <updated>2019-08-18T08:10:07.982Z</updated>
+    
+    <content type="html"><![CDATA[<p>hexo安装起来倒是挺快的，可是如果想要高程度自定义和美化自己的博客，很多地方都要下功夫。像我这种不懂得前端代码甚至markdown都写的马马虎虎的人，就有点费劲了。</p><a id="more"></a><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>整个安装过程非常顺利，根据网上的教程和官网文档来做的，大概是以下几个步骤。<br>1.安装并配置git</p><pre><code>brew install git</code></pre><p>2.安装nvm  #用来安装Node.js</p><pre><code>wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sh</code></pre><p>3.安装Node.js</p><pre><code>nvm install stable</code></pre><p>4.安装Hexo</p><pre><code>npm install -g hexo-cli</code></pre><p>5.到这里差不多可以启动了，在_config.yml中设置几个参数，就可以启动了。hexo d直接部署。</p><h1 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h1><p>我到腾讯云买了一个域名xiaoguiwk.xyz年付11块钱。没想到还要实名认证，感觉得需要个三四天了。绑定域名有几个步骤：<br>1.在GitHub上的xiaoguiwk.github.io项目中，打开settings，往下拉看到Github Pages，在custom domain中填上自己的域名，save;<br>2.打开腾讯云控制台，解析域名，填上xiaoguiwk.github.io的ip地址。ip的获取方法是ping一下…….这里其实是有问题的，GitHub好像并不会给每个用户一个固定IP地址。有人说可以把自己的域名解析到GitHub的二级域名下，但腾讯云好像并不支持这么做。<br>3.<del>对了根目录要建一个CNAME填上域名。</del> 在跟目录下不行，直接导致的结果就是每次hexo d之后就要上settings页面设置域名。正确的做法是在source目录下创建CNAME文件填上自己的域名。</p><p>不过有一点好的是好像是直接就可以用了，可能不直接实名认证的话过几天就上不了了。<br>4.证书设置我还不知道怎么设置。</p><h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>主题采用的是<a href="https://nexmoe.com/hexo-theme-nexmoe.html" target="_blank" rel="noopener">Nexmoe</a>的主题，安装过程比较顺利，主要是安装完成后出现了一点小问题————代码块被识别成为了表格。查来查去没有找到答案，最后在主题GitHub的issue中找到了答案，原来是默认的代码高亮与主题的代码高亮产生了冲突。错误如下图：</p><img src="/images/hexo坑与笔记/1.png" title="代码块错误"><p>解决办法是关掉默认的代码高亮。<br>打开_config.yml修改如下：</p><pre><code>highlight:  enable: false  line_number: false  auto_detect: false  tab_replace:</code></pre><h1 id="文章封面图"><a href="#文章封面图" class="headerlink" title="文章封面图"></a>文章封面图</h1><p>文章封面图的添加比较简单，在创建文章之前找好一张图，记下图片地址。</p><pre><code>$ hexo n &quot;hexo坑与笔记&quot;</code></pre><p>然后打开文章，在顶部添加cover。</p><pre><code>---title: hexo坑与笔记date: 2019-08-18 13:44:45tags: hexo themecover: https://images6.alphacoders.com/766/766327.jpg---</code></pre><h1 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h1><p><a href="https://www.livere.com" target="_blank" rel="noopener">livere</a>易于设置，步骤如下：</p><ul><li><p>注册livere帐号；</p></li><li><p>安装City版本；</p></li><li><p>复制uid到主题配置文件_config.yml中:</p></li></ul><pre><code>comment: liverelivere:  data_uid: MTAyMC80NjE0OC8yMjY1OQ== </code></pre><p>域名实名认证成功后记得改自己的域名。</p><h1 id="站长统计"><a href="#站长统计" class="headerlink" title="站长统计"></a>站长统计</h1><p>如下：</p><pre><code>analytics: # 统计系统，目前支持 Google analytics.js 统计、Google Tag Manager 统计、CNZZ 统计、腾讯统计、51.La统计、百度统计  google_site_id: #&lt;ID&gt;  gtags_site_id: #&lt;ID&gt;  cnzz_site_id: 1277935893  tencent_site_id: #&lt;ID&gt;  la_site_id: #&lt;ID&gt;  baidu_site_id: #&lt;ID&gt;  gtm_container_id: #&lt;ID&gt;</code></pre><p>域名实名认证成功后记得改自己的域名。</p><h1 id="头像与网站icon"><a href="#头像与网站icon" class="headerlink" title="头像与网站icon"></a>头像与网站icon</h1><pre><code>avatar: /images/avatar.png # 网站 Logobackground: https://i.loli.net/2019/01/13/5c3aec85a4343.jpg # 既是博客的背景，又是文章默认头图favicon:  href: /images/favicon.ico # 网站图标  type: image/png # 图标类型，可能的值有(image/png, image/vnd.microsoft.icon, image/x-icon, image/gif)</code></pre><p>其中，avatar.png是头像，favicon.ico是网站图标。</p><h1 id="插入图片注意事项"><a href="#插入图片注意事项" class="headerlink" title="插入图片注意事项"></a>插入图片注意事项</h1><p>图片插入的格式为:</p><pre><code>{% img /images/hexo坑与笔记/1.png "代码块错误" %}</code></pre><ul><li><p>{% img}是固定的；</p></li><li><p>/images/1.png 是图片的地址，images前面一定要加/，images文件夹放在source文件夹下面；</p></li><li><p>“代码块错误”是图片描述，图挂了会显示</p></li></ul><h1 id="tags设置"><a href="#tags设置" class="headerlink" title="tags设置"></a>tags设置</h1><p>这种方法是成功不了的。。。</p><pre><code>tags: themes hexo</code></pre><p>正确的方法应该是这样设置tags：</p><pre><code>tags:  - themes  - hexo</code></pre><h1 id="markdown语法坑"><a href="#markdown语法坑" class="headerlink" title="markdown语法坑"></a>markdown语法坑</h1><ul><li><p>不会就赶紧去学，先照着这个<a href="https://www.jianshu.com/p/191d1e21f7ed；" target="_blank" rel="noopener">https://www.jianshu.com/p/191d1e21f7ed；</a></p></li><li><p>列表输入完成之后一定要空行，不然后面全都缩进了；</p></li><li><p>也就是说这一行和上一行在编辑的时候中间有一个空行。</p></li><li><p>markdown的插入图片的方式不适用，如果想用的话需要安装插件。</p></li><li><p>代码块的插入方式有两种，一种是反引号引用，另一种是codeblock，如下：</p></li></ul><pre><code>{% codeblock lang:objc %}[rectangle setX: 10 y: 10 width: 20 height: 20];{% endcodeblock %}</code></pre><p>其中，lang是指定语言。</p><h1 id="暂时先记这么多吧。"><a href="#暂时先记这么多吧。" class="headerlink" title="暂时先记这么多吧。"></a>暂时先记这么多吧。</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;hexo安装起来倒是挺快的，可是如果想要高程度自定义和美化自己的博客，很多地方都要下功夫。像我这种不懂得前端代码甚至markdown都写的马马虎虎的人，就有点费劲了。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://xiaoguiwk.xyz/categories/hexo/"/>
+    
+    
+      <category term="themes" scheme="http://xiaoguiwk.xyz/tags/themes/"/>
+    
+      <category term="hexo" scheme="http://xiaoguiwk.xyz/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>服务器环境配置</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/17/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/17/服务器环境配置/</id>
+    <published>2019-08-17T13:06:58.000Z</published>
+    <updated>2019-08-18T06:34:51.810Z</updated>
+    
+    <content type="html"><![CDATA[<p>一台新租的服务器需要更新、配置常用环境。把这些事情记录下来以后就可以有个样板了。</p><a id="more"></a><h1 id="1-更新"><a href="#1-更新" class="headerlink" title="1.更新"></a>1.更新</h1><pre><code>$ su  #获取管理员权限 password: #输入密码 $ apt-get update #更新软件列表 $ apt-get upgrade #更新软件 </code></pre><h1 id="2-安装redis"><a href="#2-安装redis" class="headerlink" title="2.安装redis"></a>2.安装redis</h1><h2 id="2-1安装Redis"><a href="#2-1安装Redis" class="headerlink" title="2.1安装Redis"></a>2.1安装Redis</h2><pre><code>$ apt-get install redis-server -y #安装redis服务器 $ redis-server -v #查看redis版本 </code></pre><h2 id="2-2-启动redis"><a href="#2-2-启动redis" class="headerlink" title="2.2 启动redis"></a>2.2 启动redis</h2><pre><code>$ redis-server #启动redis服务器$ redis-cli #启动redis客户端127.0.0.1:6379&gt; pingPONG#即为连接成功</code></pre><h2 id="2-3-后台运行"><a href="#2-3-后台运行" class="headerlink" title="2.3 后台运行"></a>2.3 后台运行</h2><p>1）修改配置文件</p><pre><code class="bash">$ vim /etc/redis/redis.conf</code></pre><p>将daemonize no 改为 yes</p><pre><code class="bash">$ redis-server redis.conf</code></pre><p>结果发现不好使；<br>2）使用守护进程</p><pre><code class="bash">$ redis-server &amp;&lt;打印信息&gt;</code></pre><p>Ctrl+C即可后台运行</p><h2 id="2-4-关闭"><a href="#2-4-关闭" class="headerlink" title="2.4 关闭"></a>2.4 关闭</h2><pre><code class="bash">redis-cli shutdown</code></pre><h1 id="3-错误处理"><a href="#3-错误处理" class="headerlink" title="3.错误处理"></a>3.错误处理</h1><pre><code class="bash">Errors were encountered while processing:redis-serverE: Sub-process /usr/bin/dpkg returned an error code (1)</code></pre><ul><li>解决办法：  </li></ul><pre><code class="bash">$ cd /var/lib/dpkg $ sudo mv info info.bak $ sudo mkdir info $ sudo apt-get upgrade </code></pre><h1 id="4-更新Python环境"><a href="#4-更新Python环境" class="headerlink" title="4.更新Python环境"></a>4.更新Python环境</h1><pre><code class="bash">$ apt-get upgrade python3</code></pre><p>3.6提示不用更新。。。</p><h1 id="5-Git"><a href="#5-Git" class="headerlink" title="5.Git"></a>5.Git</h1><h1 id="6-Python"><a href="#6-Python" class="headerlink" title="6.Python"></a>6.Python</h1><ul><li>安装pip</li></ul><pre><code>$ apt install python3-pip</code></pre><p>requests bs4 pandas numpy scrapy aiohttp pymysql(需要先安装mysql)</p><h1 id="7-Lnmp"><a href="#7-Lnmp" class="headerlink" title="7.Lnmp"></a>7.Lnmp</h1><h1 id="8-docker"><a href="#8-docker" class="headerlink" title="8.docker"></a>8.docker</h1><h2 id="8-1-安装"><a href="#8-1-安装" class="headerlink" title="8.1 安装"></a>8.1 安装</h2><ul><li>安装以下包以使apt可以通过HTTPS使用存储库（repository）：  </li></ul><pre><code>$ sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common</code></pre><ul><li>添加Docker官方的GPG密钥：  </li></ul><pre><code>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</code></pre><ul><li>使用下面的命令来设置stable存储库：  </li></ul><pre><code>$ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</code></pre><ul><li>再更新一下apt包索引：  </li></ul><pre><code>$ sudo apt-get update</code></pre><ul><li>安装最新版本的Docker CE：  </li></ul><pre><code>$ sudo apt-get install -y docker-ce</code></pre><h2 id="8-2-启动"><a href="#8-2-启动" class="headerlink" title="8.2 启动"></a>8.2 启动</h2><ul><li>查看docker服务是否启动：  </li></ul><pre><code>$ systemctl status docker</code></pre><img src="/images/image.png" title="This is an example image"><p>即为已启动，如未启动，</p><pre><code>$ sudo systemctl start docker</code></pre><ul><li>验证docker服务：  </li></ul><pre><code>sudo docker run hello-world</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一台新租的服务器需要更新、配置常用环境。把这些事情记录下来以后就可以有个样板了。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="服务器" scheme="http://xiaoguiwk.xyz/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="环境配置" scheme="http://xiaoguiwk.xyz/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    
+      <category term="ubuntu" scheme="http://xiaoguiwk.xyz/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/17/hello-world/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/17/hello-world/</id>
+    <published>2019-08-17T12:10:43.325Z</published>
+    <updated>2019-08-18T05:14:56.006Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
