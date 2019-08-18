@@ -20,7 +20,7 @@
 <meta property="og:description" content="hexo安装起来倒是挺快的，可是如果想要高程度自定义和美化自己的博客，很多地方都要下功夫。像我这种不懂得前端代码甚至markdown都写的马马虎虎的人，就有点费劲了。">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://xiaoguiwk.github.io/images/hexo坑与笔记/1.png">
-<meta property="og:updated_time" content="2019-08-18T06:31:55.443Z">
+<meta property="og:updated_time" content="2019-08-18T06:44:12.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo坑与笔记">
 <meta name="twitter:description" content="hexo安装起来倒是挺快的，可是如果想要高程度自定义和美化自己的博客，很多地方都要下功夫。像我这种不懂得前端代码甚至markdown都写的马马虎虎的人，就有点费劲了。">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566110399369">
+  <link rel="stylesheet" href="/css/style.css?v=1566110656411">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -137,8 +137,8 @@
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月18日</a>
-    <a><i class="nexmoefont icon-areachart"></i>1k 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.2k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 5 分钟</a>
     
     
       <a class="nexmoefont icon-tag-fill -link" href="/tags/hexo/">hexo</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/themes/">themes</a>
@@ -152,8 +152,9 @@
 <pre><code>wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sh
 </code></pre><p>3.安装Node.js</p>
 <pre><code>nvm install stable</code></pre><p>4.安装Hexo</p>
-<pre><code>npm install -g hexo-cli</code></pre><p>5.到这里差不多可以启动了，在_config.yml中设置几个参数，就可以启动了。hexo d直接部署。<br>6.域名<br>我到腾讯云买了一个域名xiaoguiwk.xyz年付11块钱。没想到还要实名认证，感觉得需要个三四天了。绑定域名有几个步骤：<br>在GitHub上的xiaoguiwk.github.io项目中，打开settings，往下拉看到Github Pages，在custom domain中填上自己的域名，save。打开腾讯云控制台，解析域名，填上xiaoguiwk.github.io的ip地址。ip的获取方法是ping一下…….对了根目录要建一个CNAME填上域名。</p>
-<p>不过有一点好的是好像是直接就可以用了，可能不直接实名认证的话过几天就上不了了。</p>
+<pre><code>npm install -g hexo-cli</code></pre><p>5.到这里差不多可以启动了，在_config.yml中设置几个参数，就可以启动了。hexo d直接部署。</p>
+<h1 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h1><p>我到腾讯云买了一个域名xiaoguiwk.xyz年付11块钱。没想到还要实名认证，感觉得需要个三四天了。绑定域名有几个步骤：<br>1.在GitHub上的xiaoguiwk.github.io项目中，打开settings，往下拉看到Github Pages，在custom domain中填上自己的域名，save;<br>2.打开腾讯云控制台，解析域名，填上xiaoguiwk.github.io的ip地址。ip的获取方法是ping一下…….这里其实是有问题的，GitHub好像并不会给每个用户一个固定IP地址。有人说可以把自己的域名解析到GitHub的二级域名下，但腾讯云好像并不支持这么做。<br>3.<del>对了根目录要建一个CNAME填上域名。</del> 在跟目录下不行，直接导致的结果就是每次hexo d之后就要上settings页面设置域名。正确的做法是在source目录下创建CNAME文件填上自己的域名。</p>
+<p>不过有一点好的是好像是直接就可以用了，可能不直接实名认证的话过几天就上不了了。<br>4.证书设置我还不知道怎么设置。</p>
 <h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>主题采用的是<a href="https://nexmoe.com/hexo-theme-nexmoe.html" target="_blank" rel="noopener">Nexmoe</a>的主题，安装过程比较顺利，主要是安装完成后出现了一点小问题————代码块被识别成为了表格。查来查去没有找到答案，最后在主题GitHub的issue中找到了答案，原来是默认的代码高亮与主题的代码高亮产生了冲突。错误如下图：</p>
 <img src="/images/hexo坑与笔记/1.png" title="代码块错误">
 
@@ -209,6 +210,8 @@ favicon:
 <pre><code>tags:
   - themes
   - hexo</code></pre><h1 id="markdown语法坑"><a href="#markdown语法坑" class="headerlink" title="markdown语法坑"></a>markdown语法坑</h1><ul>
+<li><p>不会就赶紧去学，先照着这个<a href="https://www.jianshu.com/p/191d1e21f7ed；" target="_blank" rel="noopener">https://www.jianshu.com/p/191d1e21f7ed；</a></p>
+</li>
 <li><p>列表输入完成之后一定要空行，不然后面全都缩进了；</p>
 </li>
 <li><p>也就是说这一行和上一行在编辑的时候中间有一个空行。</p>
@@ -266,7 +269,7 @@ favicon:
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566110399377"></script>
+<script src="/js/app.js?v=1566110656416"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
