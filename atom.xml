@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoguiwk.xyz/"/>
-  <updated>2019-08-18T08:10:07.982Z</updated>
+  <updated>2019-08-19T16:11:15.077Z</updated>
   <id>http://xiaoguiwk.xyz/</id>
   
   <author>
@@ -15,6 +15,22 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>diamond</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/20/diamond/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/20/diamond/</id>
+    <published>2019-08-19T16:10:49.000Z</published>
+    <updated>2019-08-19T16:11:15.077Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="pictures" scheme="http://xiaoguiwk.xyz/tags/pictures/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo坑与笔记</title>
