@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566231085549">
+  <link rel="stylesheet" href="/css/style.css?v=1566316450628">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -48,7 +48,7 @@
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>Articles</span>4</div>
+        <div><span>Articles</span>5</div>
         <div><span>Tags</span>6</div>
         <div><span>Categories</span>1</div>
     </div>
@@ -124,6 +124,44 @@
         <section class="nexmoe-posts" id="brand-waterfall">
     
     <div class="nexmoe-post">
+        <a href="/2019/08/20/服务器笔记/">
+            <div class="nexmoe-post-cover mdui-ripple"> 
+                
+                    <img src="https://i.loli.net/2019/01/13/5c3aec85a4343.jpg" alt>
+                
+                <h1></h1>
+            </div>
+        </a>
+        <div class="nexmoe-post-meta">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月20日</a>
+            <a><i class="nexmoefont icon-areachart"></i>257 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+            
+            
+        </div>
+        <article>
+            
+            <h1 id="连接ssh"><a href="#连接ssh" class="headerlink" title="连接ssh"></a>连接ssh</h1><ul>
+<li>输入<pre><code>ssh -p 22 root@101.200.86.233</code></pre>它会提示你输入密码,输入正确的密码之后,你就发现已经登陆成功了.(22: 端口号 root: 用户名)<h1 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h1></li>
+<li>Nohup python3 main.py &amp;，输入命令后回车退出 </li>
+<li>查看输出内容：tail -f nohup.out </li>
+<li>关闭：ps -aux | grep “users.py”查看tid，kill tid</li>
+<li>查看后台程序：jobs -l（这是L）<h1 id="screen-后台运行的最佳解决方案"><a href="#screen-后台运行的最佳解决方案" class="headerlink" title="screen,后台运行的最佳解决方案"></a>screen,后台运行的最佳解决方案</h1></li>
+<li>创建新的screen：Screen -a x    (x是名称)</li>
+<li>查看已有screen：Screen -ls </li>
+<li>Screen -x 6149 恢复pid是6149的screen</li>
+<li>screen -x user 恢复名称为user的screen</li>
+<li>screen -X -S 6149 quit 关闭</li>
+<li>或者kill 6149即可关闭<h1 id="设置交换空间"><a href="#设置交换空间" class="headerlink" title="设置交换空间"></a>设置交换空间</h1><a href="https://cloud.tencent.com/developer/article/1342505" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1342505</a><h1 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h1><pre><code>find / -name php.ini</code></pre><h1 id="vim查找字符串"><a href="#vim查找字符串" class="headerlink" title="vim查找字符串"></a>vim查找字符串</h1></li>
+<li>默认大小写敏感(可以调整)，在normal模式下：<pre><code>esc+:+/+关键字</code></pre>如：<pre><code>$ :/max</code></pre>回车即可。n查找下一个，N查找上一个；</li>
+<li>如果默认为大小写敏感，在查询语句后加\c即为忽略大小写，如：<pre><code>$ :/max\c</code></pre>即可。</li>
+</ul>
+
+            
+        </article>
+    </div>
+    
+    <div class="nexmoe-post">
         <a href="/2019/08/20/diamond/">
             <div class="nexmoe-post-cover mdui-ripple"> 
                 
@@ -143,7 +181,8 @@
         </div>
         <article>
             
-            
+            <p><img src="/images/diamond/1.jpg" alt="diamond1"> | <img src="/images/diamond/2.jpg" alt="diamond2"></p>
+
             
         </article>
     </div>
@@ -240,7 +279,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566231085553"></script>
+<script src="/js/app.js?v=1566316450632"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   

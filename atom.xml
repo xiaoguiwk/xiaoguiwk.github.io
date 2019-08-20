@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoguiwk.xyz/"/>
-  <updated>2019-08-19T16:11:15.077Z</updated>
+  <updated>2019-08-20T15:44:20.837Z</updated>
   <id>http://xiaoguiwk.xyz/</id>
   
   <author>
@@ -17,13 +17,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://xiaoguiwk.xyz/2019/08/20/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AC%94%E8%AE%B0/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/20/服务器笔记/</id>
+    <published>2019-08-20T15:44:20.837Z</published>
+    <updated>2019-08-20T15:44:20.837Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="连接ssh"><a href="#连接ssh" class="headerlink" title="连接ssh"></a>连接ssh</h1><ul><li>输入<pre><code>ssh -p 22 root@101.200.86.233</code></pre>它会提示你输入密码,输入正确的密码之后,你就发现已经登陆成功了.(22: 端口号 root: 用户名)<h1 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h1></li><li>Nohup python3 main.py &amp;，输入命令后回车退出 </li><li>查看输出内容：tail -f nohup.out </li><li>关闭：ps -aux | grep “users.py”查看tid，kill tid</li><li>查看后台程序：jobs -l（这是L）<h1 id="screen-后台运行的最佳解决方案"><a href="#screen-后台运行的最佳解决方案" class="headerlink" title="screen,后台运行的最佳解决方案"></a>screen,后台运行的最佳解决方案</h1></li><li>创建新的screen：Screen -a x    (x是名称)</li><li>查看已有screen：Screen -ls </li><li>Screen -x 6149 恢复pid是6149的screen</li><li>screen -x user 恢复名称为user的screen</li><li>screen -X -S 6149 quit 关闭</li><li>或者kill 6149即可关闭<h1 id="设置交换空间"><a href="#设置交换空间" class="headerlink" title="设置交换空间"></a>设置交换空间</h1><a href="https://cloud.tencent.com/developer/article/1342505" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1342505</a><h1 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h1><pre><code>find / -name php.ini</code></pre><h1 id="vim查找字符串"><a href="#vim查找字符串" class="headerlink" title="vim查找字符串"></a>vim查找字符串</h1></li><li>默认大小写敏感(可以调整)，在normal模式下：<pre><code>esc+:+/+关键字</code></pre>如：<pre><code>$ :/max</code></pre>回车即可。n查找下一个，N查找上一个；</li><li>如果默认为大小写敏感，在查询语句后加\c即为忽略大小写，如：<pre><code>$ :/max\c</code></pre>即可。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;连接ssh&quot;&gt;&lt;a href=&quot;#连接ssh&quot; class=&quot;headerlink&quot; title=&quot;连接ssh&quot;&gt;&lt;/a&gt;连接ssh&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;输入&lt;pre&gt;&lt;code&gt;ssh -p 22 root@101.200.86.233&lt;/code&gt;&lt;/p
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>diamond</title>
     <link href="http://xiaoguiwk.xyz/2019/08/20/diamond/"/>
     <id>http://xiaoguiwk.xyz/2019/08/20/diamond/</id>
     <published>2019-08-19T16:10:49.000Z</published>
-    <updated>2019-08-19T16:11:15.077Z</updated>
+    <updated>2019-08-20T15:54:06.479Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/images/diamond/1.jpg" alt="diamond1"> | <img src="/images/diamond/2.jpg" alt="diamond2"></p>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/images/diamond/1.jpg&quot; alt=&quot;diamond1&quot;&gt; | &lt;img src=&quot;/images/diamond/2.jpg&quot; alt=&quot;diamond2&quot;&gt;&lt;/p&gt;
+
+      
     
     </summary>
     
