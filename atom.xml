@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoguiwk.xyz/"/>
-  <updated>2019-08-22T11:28:08.522Z</updated>
+  <updated>2019-08-22T11:28:49.667Z</updated>
   <id>http://xiaoguiwk.xyz/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>豆瓣电影爬虫（四）完整代码</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/22/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E7%88%AC%E8%99%AB%EF%BC%88%E5%9B%9B%EF%BC%89%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/</id>
+    <published>2019-08-22T09:38:22.000Z</published>
+    <updated>2019-08-22T11:28:49.667Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里是豆瓣电影异步爬虫的完整代码。</p><a id="more"></a><pre><code class="python">from urllib import parseimport jsonimport aiohttpimport asyncioimport requestsimport timeimport pymysqlinfo = []conn = Nonecursor = None#这里的cookies必须设置headers = {            &#39;Referer&#39;: &#39;https://space.bilibili.com/38690046&#39;,            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36&#39;            }# 代理def get_proxy():    return requests.get(&quot;http://127.0.0.1:5010/get/&quot;).textdef delete_proxy(proxy):    requests.get(&quot;http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy))# fetch函数async def fetch(session, url):    while 1:        try:            proxy = &#39;http://&#39;+get_proxy()            print(proxy)            async with session.get(url,proxy = proxy) as response:                return await response.read()        except Exception:            delete_proxy(proxy)# get函数async def get_html(url,semaphore):    async with semaphore:        async with aiohttp.ClientSession(headers=headers) as session:            html = await fetch(session, url)            await parse_html(html)            await asyncio.sleep(1)# parse函数async def parse_html(r):    try:        data = json.loads(r)[&#39;data&#39;]        print(data[0])        info + = data    except IndexError:        pass# 数据存储def connect_sql():    global conn,cursor    conn = pymysql.connect(        host=&#39;127.0.0.1&#39;,        port=3306,        user=&#39;root&#39;,        password=&#39;&#39;,        database=&#39;douban&#39;,        charset=&#39;utf8&#39;)    # 获取一个光标    cursor = conn.cursor()def save_infos():    global info, conn, cursor    for row in info:        try:            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;s&quot;,&quot;s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])            cursor.execute(sql)            conn.commit()        except Exception:            conn.rollback()# 获取URLdef get_url():    # type包括了全部类型    type = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]    # region包括了全部地区    region = [&#39;中国大陆&#39;,&#39;美国&#39;,&#39;中国香港&#39;,&#39;中国台湾&#39;,&#39;日本&#39;,&#39;韩国&#39;,&#39;英国&#39;,&#39;法国&#39;,&#39;德国&#39;,&#39;意大利&#39;,&#39;西班牙&#39;,&#39;印度&#39;,&#39;泰国&#39;,&#39;俄罗斯&#39;,&#39;伊朗&#39;,&#39;加拿大&#39;,&#39;澳大利亚&#39;,&#39;爱尔兰&#39;,&#39;瑞典&#39;,&#39;巴西&#39;,&#39;丹麦&#39;]    # 年份设置    year1 = [str(i) for i in range(1960,2016,5)]    year2 = [str(i) for i in range(1964,2020,5)]    base_url = [&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39; for i in range(0,1000,20)]    # 先拼接type,得到一个长度为22x50的列表    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]    r_url = [t_url[j] + &#39;&amp;countries=&#39; + parse.quote(i) for j in range(0,len(t_url)) for i in region]    # 拼接年份    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,462) for i in range(0,12)]    return y_url# main函数def main():    connect_sql()    t = time.time()    urls = get_url()    print(urls[1])    semaphore = asyncio.Semaphore(200)    loop = asyncio.get_event_loop()    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]    tasks = asyncio.gather(*tasks)    loop.run_until_complete(tasks)    save_infos()    conn.close()    print(time.time()-t)if __name__ == &#39;__main__&#39;:    main()</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里是豆瓣电影异步爬虫的完整代码。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+  </entry>
+  
+  <entry>
     <title>豆瓣电影爬虫（三）数据库设计</title>
     <link href="http://xiaoguiwk.xyz/2019/08/22/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E7%88%AC%E8%99%AB%EF%BC%88%E4%B8%89%EF%BC%89%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/"/>
     <id>http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/</id>
-    <published>2019-08-22T09:38:41.000Z</published>
-    <updated>2019-08-22T11:28:08.522Z</updated>
+    <published>2019-08-22T09:17:41.000Z</published>
+    <updated>2019-08-22T11:28:55.226Z</updated>
     
     <content type="html"><![CDATA[<p>将爬虫分析到的10个字断存储在数据库中。</p><a id="more"></a><pre><code class="sql">create database douban;create table movie(    id int primary key not null,    title varchar(200) not null,    directors varchar(100),    star int,    rate int,    casts varchar(200),    cover varchar(100),    cover_x varchar(100),    cover_y varchar(100),    url varchar(200))default charset =utf8</code></pre>]]></content>
     
@@ -39,30 +63,6 @@
       <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
     
       <category term="数据库" scheme="http://xiaoguiwk.xyz/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>豆瓣电影爬虫（四）完整代码</title>
-    <link href="http://xiaoguiwk.xyz/2019/08/22/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E7%88%AC%E8%99%AB%EF%BC%88%E5%9B%9B%EF%BC%89%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81/"/>
-    <id>http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/</id>
-    <published>2019-08-22T09:17:22.000Z</published>
-    <updated>2019-08-22T11:26:13.976Z</updated>
-    
-    <content type="html"><![CDATA[<p>这里是豆瓣电影异步爬虫的完整代码。</p><a id="more"></a><pre><code class="python">from urllib import parseimport jsonimport aiohttpimport asyncioimport requestsimport timeimport pymysqlinfo = []conn = Nonecursor = None#这里的cookies必须设置headers = {            &#39;Referer&#39;: &#39;https://space.bilibili.com/38690046&#39;,            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36&#39;            }# 代理def get_proxy():    return requests.get(&quot;http://127.0.0.1:5010/get/&quot;).textdef delete_proxy(proxy):    requests.get(&quot;http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy))# fetch函数async def fetch(session, url):    while 1:        try:            proxy = &#39;http://&#39;+get_proxy()            print(proxy)            async with session.get(url,proxy = proxy) as response:                return await response.read()        except Exception:            delete_proxy(proxy)# get函数async def get_html(url,semaphore):    async with semaphore:        async with aiohttp.ClientSession(headers=headers) as session:            html = await fetch(session, url)            await parse_html(html)            await asyncio.sleep(1)# parse函数async def parse_html(r):    try:        data = json.loads(r)[&#39;data&#39;]        print(data[0])        info + = data    except IndexError:        pass# 数据存储def connect_sql():    global conn,cursor    conn = pymysql.connect(        host=&#39;127.0.0.1&#39;,        port=3306,        user=&#39;root&#39;,        password=&#39;&#39;,        database=&#39;douban&#39;,        charset=&#39;utf8&#39;)    # 获取一个光标    cursor = conn.cursor()def save_infos():    global info, conn, cursor    for row in info:        try:            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;s&quot;,&quot;s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])            cursor.execute(sql)            conn.commit()        except Exception:            conn.rollback()# 获取URLdef get_url():    # type包括了全部类型    type = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]    # region包括了全部地区    region = [&#39;中国大陆&#39;,&#39;美国&#39;,&#39;中国香港&#39;,&#39;中国台湾&#39;,&#39;日本&#39;,&#39;韩国&#39;,&#39;英国&#39;,&#39;法国&#39;,&#39;德国&#39;,&#39;意大利&#39;,&#39;西班牙&#39;,&#39;印度&#39;,&#39;泰国&#39;,&#39;俄罗斯&#39;,&#39;伊朗&#39;,&#39;加拿大&#39;,&#39;澳大利亚&#39;,&#39;爱尔兰&#39;,&#39;瑞典&#39;,&#39;巴西&#39;,&#39;丹麦&#39;]    # 年份设置    year1 = [str(i) for i in range(1960,2016,5)]    year2 = [str(i) for i in range(1964,2020,5)]    base_url = [&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39; for i in range(0,1000,20)]    # 先拼接type,得到一个长度为22x50的列表    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]    r_url = [t_url[j] + &#39;&amp;countries=&#39; + parse.quote(i) for j in range(0,len(t_url)) for i in region]    # 拼接年份    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,462) for i in range(0,12)]    return y_url# main函数def main():    connect_sql()    t = time.time()    urls = get_url()    print(urls[1])    semaphore = asyncio.Semaphore(200)    loop = asyncio.get_event_loop()    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]    tasks = asyncio.gather(*tasks)    loop.run_until_complete(tasks)    save_infos()    conn.close()    print(time.time()-t)if __name__ == &#39;__main__&#39;:    main()</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这里是豆瓣电影异步爬虫的完整代码。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
     
   </entry>
   
