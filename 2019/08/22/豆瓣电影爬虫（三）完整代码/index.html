@@ -3,7 +3,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
   
-  <title>All tags - xiaogui</title>
+  <title>豆瓣电影爬虫（三）完整代码 - xiaogui</title>
   <meta charset="UTF-8">
   <meta name="description" content>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,21 +11,25 @@
   
 
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="All tags">
-<meta property="og:url" content="http://xiaoguiwk.xyz/tags/index.html">
+  <meta name="description" content="这里是豆瓣电影异步爬虫的完整代码。">
+<meta name="keywords" content="爬虫,豆瓣">
+<meta property="og:type" content="article">
+<meta property="og:title" content="豆瓣电影爬虫（三）完整代码">
+<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）完整代码/index.html">
 <meta property="og:site_name" content="xiaogui">
+<meta property="og:description" content="这里是豆瓣电影异步爬虫的完整代码。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-17T14:32:20.522Z">
+<meta property="og:updated_time" content="2019-08-22T09:24:06.059Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="All tags">
+<meta name="twitter:title" content="豆瓣电影爬虫（三）完整代码">
+<meta name="twitter:description" content="这里是豆瓣电影异步爬虫的完整代码。">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566465855387">
+  <link rel="stylesheet" href="/css/style.css?v=1566465855601">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -125,26 +129,47 @@
         <div class="nexmoe-post">
     <div class="nexmoe-post-cover"> 
         
-            <img src="https://i.loli.net/2019/01/13/5c3aec85a4343.jpg">
+        <img src="https://images.alphacoders.com/746/746127.jpg">
         
-        <h1>All tags</h1>
+        <h1>豆瓣电影爬虫（三）完整代码</h1>
     </div>
   <div class="nexmoe-post-meta">
-    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月17日</a>
-    <a><i class="nexmoefont icon-areachart"></i>0 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+    <a><i class="nexmoefont icon-areachart"></i>589 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
     
+      <a class="nexmoefont icon-appstore-fill -link" href="/categories/学习/">学习</a>
+    
+    
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
     
   </div>
   <article>
-    
+    <p>这里是豆瓣电影异步爬虫的完整代码。</p>
+<a id="more"></a>
+
+<p>```<br>from urllib import parse<br>import json<br>import aiohttp<br>import asyncio<br>import requests<br>import time<br>import pymysql</p>
+<p>info = []<br>conn = None<br>cursor = None</p>
+<p>#这里的cookies必须设置</p>
+<p>headers = {<br>            ‘Referer’: ‘<a href="https://space.bilibili.com/38690046&#39;" target="_blank" rel="noopener">https://space.bilibili.com/38690046&#39;</a>,<br>            ‘User-Agent’: ‘Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36’<br>            }</p>
+<h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><p>def get_proxy():<br>    return requests.get(“<a href="http://127.0.0.1:5010/get/&quot;).text" target="_blank" rel="noopener">http://127.0.0.1:5010/get/&quot;).text</a></p>
+<p>def delete_proxy(proxy):<br>    requests.get(“<a href="http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy)" target="_blank" rel="noopener">http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy)</a>)</p>
+<h1 id="fetch函数"><a href="#fetch函数" class="headerlink" title="fetch函数"></a>fetch函数</h1><p>async def fetch(session, url):<br>    while 1:<br>        try:<br>            proxy = ‘http://‘+get_proxy()<br>            print(proxy)<br>            async with session.get(url,proxy = proxy) as response:<br>                return await response.read()<br>        except Exception:<br>            delete_proxy(proxy)</p>
+<h1 id="get函数"><a href="#get函数" class="headerlink" title="get函数"></a>get函数</h1><p>async def get_html(url,semaphore):<br>    async with semaphore:<br>        async with aiohttp.ClientSession(headers=headers) as session:<br>            html = await fetch(session, url)<br>            await parse_html(html)<br>            await asyncio.sleep(1)</p>
+<h1 id="parse函数"><a href="#parse函数" class="headerlink" title="parse函数"></a>parse函数</h1><p>async def parse_html(r):<br>    try:<br>        data = json.loads(r)[‘data’]<br>        print(data[0])<br>        info + = data<br>    except IndexError:<br>        pass</p>
+<h1 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h1><p>def connect_sql():<br>    global conn,cursor<br>    conn = pymysql.connect(<br>        host=’127.0.0.1’,<br>        port=3306,<br>        user=’root’,<br>        password=’’,<br>        database=’douban’,<br>        charset=’utf8’)<br>    # 获取一个光标<br>    cursor = conn.cursor()</p>
+<p>def save_infos():<br>    global info, conn, cursor<br>    for row in info:<br>        try:<br>            sql = ‘insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(“%s”,”%s”,”%s”,”%s”,”%s”,”%s”,”%s”,”%s”,”s”,”s”)’%(row[‘directors’],row[‘rate’],row[‘cover_x’],row[‘star’],row[‘title’],row[‘url’],row[‘casts’],row[‘cover’],row[‘id’],row[‘cover_y’])<br>            cursor.execute(sql)<br>            conn.commit()<br>        except Exception:<br>            conn.rollback()</p>
+<h1 id="获取URL"><a href="#获取URL" class="headerlink" title="获取URL"></a>获取URL</h1><p>def get_url():<br>    # type包括了全部类型<br>    type = [‘剧情’,’喜剧’,’动作’,’爱情’,’科幻’,’动画’,’悬疑’,’惊悚’,’恐怖’,’犯罪’,’同性’,’音乐’,’歌舞’,’传记’,’历史’,’战争’,’西部’,’奇幻’,’冒险’,’灾难’,’武侠’,’情色’]<br><br>    # region包括了全部地区<br>    region = [‘中国大陆’,’美国’,’中国香港’,’中国台湾’,’日本’,’韩国’,’英国’,’法国’,’德国’,’意大利’,’西班牙’,’印度’,’泰国’,’俄罗斯’,’伊朗’,’加拿大’,’澳大利亚’,’爱尔兰’,’瑞典’,’巴西’,’丹麦’]<br><br>    # 年份设置<br>    year1 = [str(i) for i in range(1960,2016,5)]<br>    year2 = [str(i) for i in range(1964,2020,5)]<br><br>    base_url = [‘<a href="https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39;" target="_blank" rel="noopener">https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39;</a> for i in range(0,1000,20)]<br><br>    # 先拼接type,得到一个长度为22x50的列表<br>    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]<br><br>    r_url = [t_url[j] + ‘&amp;countries=’ + parse.quote(i) for j in range(0,len(t_url)) for i in region]<br><br>    # 拼接年份<br>    y_url = [r_url[j] + ‘&amp;year_range=’ + year1[i] + ‘,’ + year2[i] for j in range(0,462) for i in range(0,12)]<br><br>    return y_url</p>
+<h1 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h1><p>def main():<br>    connect_sql()<br>    t = time.time()<br>    urls = get_url()<br>    print(urls[1])<br>    semaphore = asyncio.Semaphore(200)<br>    loop = asyncio.get_event_loop()<br>    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]<br>    tasks = asyncio.gather(*tasks)<br>    loop.run_until_complete(tasks)<br>    save_infos()<br>    conn.close()<br>    print(time.time()-t)</p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    main()</p>
+
   </article>
   
     
 <div class="nexmoe-post-copyright">
 <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
 <strong>Author：</strong>xiaoguiwk<br>
-<strong>Link：</strong><a href="http://xiaoguiwk.xyz/tags/index.html" title="http://xiaoguiwk.xyz/tags/index.html" target="_blank" rel="noopener">http://xiaoguiwk.xyz/tags/index.html</a><br>
+<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）完整代码/" title="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）完整代码/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）完整代码/</a><br>
 
   <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
 
@@ -182,7 +207,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566465855392"></script>
+<script src="/js/app.js?v=1566465855605"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
