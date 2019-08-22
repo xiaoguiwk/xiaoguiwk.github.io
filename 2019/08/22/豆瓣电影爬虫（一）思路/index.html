@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="xiaogui">
 <meta property="og:description" content="豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-22T07:54:06.109Z">
+<meta property="og:updated_time" content="2019-08-22T07:55:31.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="豆瓣电影爬虫（一）思路">
 <meta name="twitter:description" content="豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566460451531">
+  <link rel="stylesheet" href="/css/style.css?v=1566460535355">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -54,7 +54,7 @@
     </div>
     <div class="nexmoe-count">
         <div><span>Articles</span>6</div>
-        <div><span>Tags</span>14</div>
+        <div><span>Tags</span>12</div>
         <div><span>Categories</span>3</div>
     </div>
     <ul class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
@@ -155,7 +155,7 @@
 <li><p>打开电影分类的网页得到的页面如下图：</p>
 </li>
 </ul>
-<div align="center">![豆瓣电影分类](/images/豆瓣电影爬虫（一）思路/1.jpg)
+<div align="center">![豆瓣电影分类](/images/豆瓣电影爬虫（一）思路/1.jpg)</div>
 
 <blockquote>
 <p>通过观察这个页面，可以发现这个页面基本上已经做到我想要的东西了。。。但是话说回来，我要做的是：把这个页面爬下来，再爬下来详情页面，存在数据库的两张表中，我就可以开心的练习数据库了。</p>
@@ -310,7 +310,7 @@ y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[
 <pre><code>$ python3
 &gt;&gt;&gt; from .....
 &gt;&gt;&gt; y_url[0]
-&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=0&amp;genres=%E5%89%A7%E6%83%85&amp;countries=%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86&amp;year_range=1960,1964&#39;</code></pre><h1 id="BINGO"><a href="#BINGO" class="headerlink" title="BINGO!"></a>BINGO!</h1><h2 id="到此为止生成了5544个URL，下一步就是取了。"><a href="#到此为止生成了5544个URL，下一步就是取了。" class="headerlink" title="到此为止生成了5544个URL，下一步就是取了。"></a>到此为止生成了5544个URL，下一步就是取了。</h2></div>
+&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=0&amp;genres=%E5%89%A7%E6%83%85&amp;countries=%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86&amp;year_range=1960,1964&#39;</code></pre><h1 id="BINGO"><a href="#BINGO" class="headerlink" title="BINGO!"></a>BINGO!</h1><h2 id="到此为止生成了5544个URL，下一步就是取了。"><a href="#到此为止生成了5544个URL，下一步就是取了。" class="headerlink" title="到此为止生成了5544个URL，下一步就是取了。"></a>到此为止生成了5544个URL，下一步就是取了。</h2>
   </article>
   
     
@@ -355,7 +355,7 @@ y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566460451537"></script>
+<script src="/js/app.js?v=1566460535361"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
