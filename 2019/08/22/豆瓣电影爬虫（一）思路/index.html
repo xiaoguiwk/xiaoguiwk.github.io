@@ -20,7 +20,7 @@
 <meta property="og:description" content="豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://xiaoguiwk.xyz/images/豆瓣电影爬虫（一）思路/1.jpg">
-<meta property="og:updated_time" content="2019-08-22T08:06:30.933Z">
+<meta property="og:updated_time" content="2019-08-22T08:07:51.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="豆瓣电影爬虫（一）思路">
 <meta name="twitter:description" content="豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566461194483">
+  <link rel="stylesheet" href="/css/style.css?v=1566461278660">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -195,12 +195,24 @@ characteristics = [&#39;经典&#39;,&#39;青春&#39;,&#39;文艺&#39;,&#39;搞�
 <ol>
 <li>sort=U: 排序方式，可以选择以下几个：</li>
 </ol>
-<div align="center">
-符号 | U | S | T | R
-:-: | :-: | :-: | :-: | :-:
-含义 | 近期热门 | 评分最高 | 标记最多 | 最新上映
-</div>
-
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">U</th>
+<th align="center">S</th>
+<th align="center">T</th>
+<th align="center">R</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">含义</td>
+<td align="center">近期热门</td>
+<td align="center">评分最高</td>
+<td align="center">标记最多</td>
+<td align="center">最新上映</td>
+</tr>
+</tbody></table>
 <ol start="2">
 <li>range=0,10 : 评分筛选，可以选择筛选的电影的评分区间，这里一般设置为7，10就可以筛选出来大部分好电影。有一个问题在于<strong>这里的0，10的数据类型是什么样的</strong>；</li>
 <li>tags=中国大陆： 这里的tags指的是前面设置的type；</li>
@@ -347,7 +359,7 @@ y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566461194488"></script>
+<script src="/js/app.js?v=1566461278666"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
