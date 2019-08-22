@@ -11,25 +11,25 @@
   
 
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
-  <meta name="description" content="create database douban;  create table movie(     id int primary key not null,     title varchar(200) not null,     directors varchar(100),     star int,     rate int,     casts varchar(200),     cover">
+  <meta name="description" content="将爬虫分析到的10个字断存储在数据库中。">
 <meta name="keywords" content="爬虫,豆瓣,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="豆瓣电影爬虫（三）数据库设计">
 <meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/index.html">
 <meta property="og:site_name" content="xiaogui">
-<meta property="og:description" content="create database douban;  create table movie(     id int primary key not null,     title varchar(200) not null,     directors varchar(100),     star int,     rate int,     casts varchar(200),     cover">
+<meta property="og:description" content="将爬虫分析到的10个字断存储在数据库中。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-22T11:26:24.704Z">
+<meta property="og:updated_time" content="2019-08-22T11:28:08.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="豆瓣电影爬虫（三）数据库设计">
-<meta name="twitter:description" content="create database douban;  create table movie(     id int primary key not null,     title varchar(200) not null,     directors varchar(100),     star int,     rate int,     casts varchar(200),     cover">
+<meta name="twitter:description" content="将爬虫分析到的10个字断存储在数据库中。">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566473199865">
+  <link rel="stylesheet" href="/css/style.css?v=1566473294810">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -135,7 +135,7 @@
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
-    <a><i class="nexmoefont icon-areachart"></i>42 字</a>
+    <a><i class="nexmoefont icon-areachart"></i>60 字</a>
     <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
     
       <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
@@ -145,7 +145,10 @@
     
   </div>
   <article>
-    <pre><code class="sql">create database douban;
+    <p>将爬虫分析到的10个字断存储在数据库中。</p>
+<a id="more"></a>
+
+<pre><code class="sql">create database douban;
 
 create table movie(
     id int primary key not null,
@@ -203,7 +206,7 @@ create table movie(
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566473199870"></script>
+<script src="/js/app.js?v=1566473294815"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
