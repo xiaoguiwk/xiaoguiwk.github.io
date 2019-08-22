@@ -3,7 +3,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
   
-  <title>豆瓣电影爬虫（四）完整代码 - xiaogui</title>
+  <title>豆瓣电影爬虫（五）同步版本 - xiaogui</title>
   <meta charset="UTF-8">
   <meta name="description" content>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,25 +11,25 @@
   
 
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
-  <meta name="description" content="这里是豆瓣电影异步爬虫的完整代码。">
+  <meta name="description" content="同步版本的速度要慢一点，但是优点在于：当到达某一页面返回值为空时，不再请求后面的页面，减少可请求次数。">
 <meta name="keywords" content="豆瓣,爬虫">
 <meta property="og:type" content="article">
-<meta property="og:title" content="豆瓣电影爬虫（四）完整代码">
-<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/index.html">
+<meta property="og:title" content="豆瓣电影爬虫（五）同步版本">
+<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（五）同步版本/index.html">
 <meta property="og:site_name" content="xiaogui">
-<meta property="og:description" content="这里是豆瓣电影异步爬虫的完整代码。">
+<meta property="og:description" content="同步版本的速度要慢一点，但是优点在于：当到达某一页面返回值为空时，不再请求后面的页面，减少可请求次数。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-22T11:28:49.667Z">
+<meta property="og:updated_time" content="2019-08-22T13:11:38.504Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="豆瓣电影爬虫（四）完整代码">
-<meta name="twitter:description" content="这里是豆瓣电影异步爬虫的完整代码。">
+<meta name="twitter:title" content="豆瓣电影爬虫（五）同步版本">
+<meta name="twitter:description" content="同步版本的速度要慢一点，但是优点在于：当到达某一页面返回值为空时，不再请求后面的页面，减少可请求次数。">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566488461865">
+  <link rel="stylesheet" href="/css/style.css?v=1566488462179">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -129,14 +129,14 @@
         <div class="nexmoe-post">
     <div class="nexmoe-post-cover"> 
         
-        <img src="https://images.alphacoders.com/746/746127.jpg">
+        <img src="https://images2.alphacoders.com/727/72732.png">
         
-        <h1>豆瓣电影爬虫（四）完整代码</h1>
+        <h1>豆瓣电影爬虫（五）同步版本</h1>
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
-    <a><i class="nexmoefont icon-areachart"></i>761 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.4k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 7 分钟</a>
     
       <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
     
@@ -145,27 +145,54 @@
     
   </div>
   <article>
-    <p>这里是豆瓣电影异步爬虫的完整代码。</p>
+    <p>同步版本的速度要慢一点，但是优点在于：当到达某一页面返回值为空时，不再请求后面的页面，减少可请求次数。</p>
 <a id="more"></a>
+<ul>
+<li><p>空白页面的判断也是目前的难点。异步加载的数据使人无法判断一共返回了多少数据，那这里一定是需要一个判断的，到底该如何判断，仍需要研究大佬的代码。</p>
+</li>
+<li><p>同步版本的代码完善了cookies的设置，并且在每次parse出数据之后便存入数据库，不存在一次报错或者不可控制因素发生时导致前功尽弃的现象。</p>
+</li>
+<li><p>其次，这个版本也完善了URL的设置。get_url()函数仅仅对于type、region等参数进行了拼接，没有拼接页码，这给空白页判断留下了空间。</p>
+</li>
+<li><p>以下是同步版本的代码：</p>
+</li>
+</ul>
+<pre><code class="python"># 同步版本
 
-<pre><code class="python">from urllib import parse
+from urllib import parse
 import json
-import aiohttp
-import asyncio
 import requests
 import time
 import pymysql
+import random
+import string
 
 info = []
 conn = None
 cursor = None
 
-#这里的cookies必须设置
+# 这里的cookies必须设置
 
+user_agent_list = [
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; Media Center PC 6.0; InfoPath.2; MS-RTC LM 8)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; InfoPath.2)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; Zune 3.0)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; msn OptimizedIE8;ZHCN)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW6s4; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; MS-RTC LM 8)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; Zune 4.0)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; OfficeLiveConnector.1.4; OfficeLivePatch.1.3; yie8)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; OfficeLiveConnector.1.3; OfficeLivePatch.0.0; Zune 3.0; MS-RTC LM 8)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; OfficeLiveConnector.1.3; OfficeLivePatch.0.0; MS-RTC LM 8; Zune 4.0)&#39;,
+        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; MS-RTC LM 8)&#39;,
+    ]
 headers = {
-            &#39;Referer&#39;: &#39;https://space.bilibili.com/38690046&#39;,
-            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36&#39;
-            }
+        &#39;User-Agent&#39;: random.choice(user_agent_list)
+    }
+# 随机生成一个11位的cookie
+num = &#39;&#39;.join(random.sample(string.digits + string.ascii_letters, 11))
+cookie = {&#39;bid&#39;: num, &#39;ll&#39;: &#39;&quot;108296&quot;&#39;}
 
 # 代理
 def get_proxy():
@@ -174,34 +201,17 @@ def get_proxy():
 def delete_proxy(proxy):
     requests.get(&quot;http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy))
 
-# fetch函数
-async def fetch(session, url):
+def get_page(url):
     while 1:
         try:
-            proxy = &#39;http://&#39;+get_proxy()
-            print(proxy)
-            async with session.get(url,proxy = proxy) as response:
-                return await response.read()
+            proxies = {&#39;http&#39;:&#39;http://&#39;+get_proxy()}
+            print(proxies)
+            r = requests.get(url, headers = headers, proxies = proxies, cookies = cookie)
+            return json.loads(r.text)[&#39;data&#39;]
         except Exception:
             delete_proxy(proxy)
-# get函数
-async def get_html(url,semaphore):
-    async with semaphore:
-        async with aiohttp.ClientSession(headers=headers) as session:
-            html = await fetch(session, url)
-            await parse_html(html)
-            await asyncio.sleep(1)
 
-# parse函数
-async def parse_html(r):
-    try:
-        data = json.loads(r)[&#39;data&#39;]
-        print(data[0])
-        info + = data
-    except IndexError:
-        pass
 
-# 数据存储
 def connect_sql():
     global conn,cursor
     conn = pymysql.connect(
@@ -214,57 +224,57 @@ def connect_sql():
     # 获取一个光标
     cursor = conn.cursor()
 
-def save_infos():
-    global info, conn, cursor
-    for row in info:
+def save_infos(data):
+
+    for row in data:
         try:
-            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;s&quot;,&quot;s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])
+            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])
             cursor.execute(sql)
             conn.commit()
         except Exception:
             conn.rollback()
 
+
 # 获取URL
 def get_url():
-    # type包括了全部类型
-    type = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]
-
-    # region包括了全部地区
+    type_ = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]
     region = [&#39;中国大陆&#39;,&#39;美国&#39;,&#39;中国香港&#39;,&#39;中国台湾&#39;,&#39;日本&#39;,&#39;韩国&#39;,&#39;英国&#39;,&#39;法国&#39;,&#39;德国&#39;,&#39;意大利&#39;,&#39;西班牙&#39;,&#39;印度&#39;,&#39;泰国&#39;,&#39;俄罗斯&#39;,&#39;伊朗&#39;,&#39;加拿大&#39;,&#39;澳大利亚&#39;,&#39;爱尔兰&#39;,&#39;瑞典&#39;,&#39;巴西&#39;,&#39;丹麦&#39;]
-
-    # 年份设置
     year1 = [str(i) for i in range(1960,2016,5)]
     year2 = [str(i) for i in range(1964,2020,5)]
-
-    base_url = [&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39; for i in range(0,1000,20)]
-
-    # 先拼接type,得到一个长度为22x50的列表
-    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]
-
+    t_url = [&#39;&amp;genres=&#39; + parse.quote(i) for i in type_]
     r_url = [t_url[j] + &#39;&amp;countries=&#39; + parse.quote(i) for j in range(0,len(t_url)) for i in region]
-
-    # 拼接年份
-    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,462) for i in range(0,12)]
-
+    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,len(r_url)) for i in range(0,12)]
     return y_url
+
 
 # main函数
 def main():
     connect_sql()
     t = time.time()
+    base_url = &#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;
+
+    #开始循环  
     urls = get_url()
-    print(urls[1])
-    semaphore = asyncio.Semaphore(200)
-    loop = asyncio.get_event_loop()
-    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]
-    tasks = asyncio.gather(*tasks)
-    loop.run_until_complete(tasks)
-    save_infos()
+    # 外层循环：遍历所有标签
+    for url in urls:
+        n = 0
+        # 内层循环：每次循环增加页码，如果返回数据为空，则跳出循环，说明已经拿不到更多数据了。
+        while 1:
+            u = base_url + str(n) + url
+            data = get_page(u)
+            if data == []:
+                print(u)
+                break
+            print(data[0])
+            save_infos(data)
+            n += 20
+
     conn.close()
     print(time.time()-t)
 
 if __name__ == &#39;__main__&#39;:
-    main()</code></pre>
+    main()
+</code></pre>
 
   </article>
   
@@ -272,7 +282,7 @@ if __name__ == &#39;__main__&#39;:
 <div class="nexmoe-post-copyright">
 <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
 <strong>Author：</strong>xiaoguiwk<br>
-<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/" title="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/</a><br>
+<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（五）同步版本/" title="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（五）同步版本/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（五）同步版本/</a><br>
 
   <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
 
@@ -310,7 +320,7 @@ if __name__ == &#39;__main__&#39;:
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566488461872"></script>
+<script src="/js/app.js?v=1566488462185"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   

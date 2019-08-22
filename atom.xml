@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoguiwk.xyz/"/>
-  <updated>2019-08-22T11:28:49.667Z</updated>
+  <updated>2019-08-22T15:40:14.392Z</updated>
   <id>http://xiaoguiwk.xyz/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>豆瓣爬虫Scrapy“抄袭”改写</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/22/%E8%B1%86%E7%93%A3%E7%88%AC%E8%99%ABScrapy%E2%80%9C%E6%8A%84%E8%A2%AD%E2%80%9D%E6%94%B9%E5%86%99/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/22/豆瓣爬虫Scrapy“抄袭”改写/</id>
+    <published>2019-08-22T15:14:06.000Z</published>
+    <updated>2019-08-22T15:40:14.392Z</updated>
+    
+    <content type="html"><![CDATA[<p>主要是把项目从docker里面扒拉出来，但是扒拉完好像又没有什么用，放在docker里面运行多好。</p><a id="more"></a><p>下面主要记一下改动的地方吧。</p><h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><ol><li><p>配置：在database.py中改掉自己的数据库配置。</p></li><li><p><a href="https://github.com/40robber/ScrapyDouban/blob/master/docker/mysql/douban.sql" target="_blank" rel="noopener">表结构</a>，直接运行可以通过。代码见链接内容。</p></li><li><p>异步存储还是不会改。</p></li></ol><h1 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h1><p>把spider中的类名改成和文件名相同，好像不碍事。</p><h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><ol><li>settings.py中找到<pre><code class="python">DOWNLOADER_MIDDLEWARES = { &#39;douban.middlewares.ProxyMiddleware&#39;: 543,}</code></pre>并打开注释；</li><li>pipelines.py找到<pre><code class="python">class ProxyMiddleware(object): def process_request(self, request, spider):     # curl https://m.douban.com/book/subject/26628811/ -x http://127.0.0.1:8081     request.meta[&#39;proxy&#39;] = &#39;http://127.0.0.1:5010&#39;     # request.meta[&#39;proxy&#39;] = &#39;http://10.0.0.164:1080&#39;</code></pre>并将端口号改为5010.</li></ol><blockquote><p>这里的改动主要是因为我比较熟悉<a href="https://github.com/jhao104/proxy_pool" target="_blank" rel="noopener">jhao104</a>搭建的代理池并且稳定性还不错。</p></blockquote><h1 id="其他的好像只字未改。"><a href="#其他的好像只字未改。" class="headerlink" title="其他的好像只字未改。"></a>其他的好像只字未改。</h1><p>目前这样做的好处是我可以自由调用我自己配置好的数据库，并且如果想要重新放入docker中仍然可以这样做。</p><h1 id="仍然存在的几点疑问"><a href="#仍然存在的几点疑问" class="headerlink" title="仍然存在的几点疑问"></a>仍然存在的几点疑问</h1><ul><li><p>如果通过start_url获取到更多的URL。</p></li><li><p>代理究竟是如何工作的？pipelines中的代码好像仅仅是返回了一个地址而已。</p></li><li><p>数据库的异步存储如何进一步改写。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;主要是把项目从docker里面扒拉出来，但是扒拉完好像又没有什么用，放在docker里面运行多好。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Scarpy" scheme="http://xiaoguiwk.xyz/tags/Scarpy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>豆瓣电影爬虫（五）同步版本</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/22/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E7%88%AC%E8%99%AB%EF%BC%88%E4%BA%94%EF%BC%89%E5%90%8C%E6%AD%A5%E7%89%88%E6%9C%AC/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（五）同步版本/</id>
+    <published>2019-08-22T13:04:49.000Z</published>
+    <updated>2019-08-22T13:11:38.504Z</updated>
+    
+    <content type="html"><![CDATA[<p>同步版本的速度要慢一点，但是优点在于：当到达某一页面返回值为空时，不再请求后面的页面，减少可请求次数。</p><a id="more"></a><ul><li><p>空白页面的判断也是目前的难点。异步加载的数据使人无法判断一共返回了多少数据，那这里一定是需要一个判断的，到底该如何判断，仍需要研究大佬的代码。</p></li><li><p>同步版本的代码完善了cookies的设置，并且在每次parse出数据之后便存入数据库，不存在一次报错或者不可控制因素发生时导致前功尽弃的现象。</p></li><li><p>其次，这个版本也完善了URL的设置。get_url()函数仅仅对于type、region等参数进行了拼接，没有拼接页码，这给空白页判断留下了空间。</p></li><li><p>以下是同步版本的代码：</p></li></ul><pre><code class="python"># 同步版本from urllib import parseimport jsonimport requestsimport timeimport pymysqlimport randomimport stringinfo = []conn = Nonecursor = None# 这里的cookies必须设置user_agent_list = [        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; Media Center PC 6.0; InfoPath.2; MS-RTC LM 8)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; InfoPath.2)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; Zune 3.0)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; msn OptimizedIE8;ZHCN)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW6s4; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; MS-RTC LM 8)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; Zune 4.0)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; OfficeLiveConnector.1.4; OfficeLivePatch.1.3; yie8)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; OfficeLiveConnector.1.3; OfficeLivePatch.0.0; Zune 3.0; MS-RTC LM 8)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; OfficeLiveConnector.1.3; OfficeLivePatch.0.0; MS-RTC LM 8; Zune 4.0)&#39;,        &#39;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; MS-RTC LM 8)&#39;,    ]headers = {        &#39;User-Agent&#39;: random.choice(user_agent_list)    }# 随机生成一个11位的cookienum = &#39;&#39;.join(random.sample(string.digits + string.ascii_letters, 11))cookie = {&#39;bid&#39;: num, &#39;ll&#39;: &#39;&quot;108296&quot;&#39;}# 代理def get_proxy():    return requests.get(&quot;http://127.0.0.1:5010/get/&quot;).textdef delete_proxy(proxy):    requests.get(&quot;http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy))def get_page(url):    while 1:        try:            proxies = {&#39;http&#39;:&#39;http://&#39;+get_proxy()}            print(proxies)            r = requests.get(url, headers = headers, proxies = proxies, cookies = cookie)            return json.loads(r.text)[&#39;data&#39;]        except Exception:            delete_proxy(proxy)def connect_sql():    global conn,cursor    conn = pymysql.connect(        host=&#39;127.0.0.1&#39;,        port=3306,        user=&#39;root&#39;,        password=&#39;&#39;,        database=&#39;douban&#39;,        charset=&#39;utf8&#39;)    # 获取一个光标    cursor = conn.cursor()def save_infos(data):    for row in data:        try:            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])            cursor.execute(sql)            conn.commit()        except Exception:            conn.rollback()# 获取URLdef get_url():    type_ = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]    region = [&#39;中国大陆&#39;,&#39;美国&#39;,&#39;中国香港&#39;,&#39;中国台湾&#39;,&#39;日本&#39;,&#39;韩国&#39;,&#39;英国&#39;,&#39;法国&#39;,&#39;德国&#39;,&#39;意大利&#39;,&#39;西班牙&#39;,&#39;印度&#39;,&#39;泰国&#39;,&#39;俄罗斯&#39;,&#39;伊朗&#39;,&#39;加拿大&#39;,&#39;澳大利亚&#39;,&#39;爱尔兰&#39;,&#39;瑞典&#39;,&#39;巴西&#39;,&#39;丹麦&#39;]    year1 = [str(i) for i in range(1960,2016,5)]    year2 = [str(i) for i in range(1964,2020,5)]    t_url = [&#39;&amp;genres=&#39; + parse.quote(i) for i in type_]    r_url = [t_url[j] + &#39;&amp;countries=&#39; + parse.quote(i) for j in range(0,len(t_url)) for i in region]    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,len(r_url)) for i in range(0,12)]    return y_url# main函数def main():    connect_sql()    t = time.time()    base_url = &#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;    #开始循环      urls = get_url()    # 外层循环：遍历所有标签    for url in urls:        n = 0        # 内层循环：每次循环增加页码，如果返回数据为空，则跳出循环，说明已经拿不到更多数据了。        while 1:            u = base_url + str(n) + url            data = get_page(u)            if data == []:                print(u)                break            print(data[0])            save_infos(data)            n += 20    conn.close()    print(time.time()-t)if __name__ == &#39;__main__&#39;:    main()</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;同步版本的速度要慢一点，但是优点在于：当到达某一页面返回值为空时，不再请求后面的页面，减少可请求次数。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>豆瓣电影爬虫（四）完整代码</title>
@@ -34,9 +84,9 @@
       <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
@@ -45,7 +95,7 @@
     <link href="http://xiaoguiwk.xyz/2019/08/22/%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1%E7%88%AC%E8%99%AB%EF%BC%88%E4%B8%89%EF%BC%89%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/"/>
     <id>http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/</id>
     <published>2019-08-22T09:17:41.000Z</published>
-    <updated>2019-08-22T11:28:55.226Z</updated>
+    <updated>2019-08-22T11:32:36.354Z</updated>
     
     <content type="html"><![CDATA[<p>将爬虫分析到的10个字断存储在数据库中。</p><a id="more"></a><pre><code class="sql">create database douban;create table movie(    id int primary key not null,    title varchar(200) not null,    directors varchar(100),    star int,    rate int,    casts varchar(200),    cover varchar(100),    cover_x varchar(100),    cover_y varchar(100),    url varchar(200))default charset =utf8</code></pre>]]></content>
     
@@ -58,9 +108,9 @@
       <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="数据库" scheme="http://xiaoguiwk.xyz/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
@@ -84,9 +134,9 @@
       <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="异步" scheme="http://xiaoguiwk.xyz/tags/%E5%BC%82%E6%AD%A5/"/>
     
@@ -110,9 +160,9 @@
       <category term="爬虫" scheme="http://xiaoguiwk.xyz/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="豆瓣" scheme="http://xiaoguiwk.xyz/tags/%E8%B1%86%E7%93%A3/"/>
+    
+      <category term="爬虫" scheme="http://xiaoguiwk.xyz/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="异步" scheme="http://xiaoguiwk.xyz/tags/%E5%BC%82%E6%AD%A5/"/>
     
@@ -142,9 +192,9 @@
       <category term="服务器" scheme="http://xiaoguiwk.xyz/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
     
-      <category term="服务器" scheme="http://xiaoguiwk.xyz/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
       <category term="ubuntu" scheme="http://xiaoguiwk.xyz/tags/ubuntu/"/>
+    
+      <category term="服务器" scheme="http://xiaoguiwk.xyz/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   
@@ -208,11 +258,11 @@
     </summary>
     
     
+      <category term="ubuntu" scheme="http://xiaoguiwk.xyz/tags/ubuntu/"/>
+    
       <category term="服务器" scheme="http://xiaoguiwk.xyz/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
       <category term="环境配置" scheme="http://xiaoguiwk.xyz/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    
-      <category term="ubuntu" scheme="http://xiaoguiwk.xyz/tags/ubuntu/"/>
     
   </entry>
   
@@ -221,7 +271,7 @@
     <link href="http://xiaoguiwk.xyz/2019/08/17/hello-world/"/>
     <id>http://xiaoguiwk.xyz/2019/08/17/hello-world/</id>
     <published>2019-08-17T12:10:43.325Z</published>
-    <updated>2019-08-18T05:14:56.006Z</updated>
+    <updated>2019-08-22T15:40:53.029Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
     
