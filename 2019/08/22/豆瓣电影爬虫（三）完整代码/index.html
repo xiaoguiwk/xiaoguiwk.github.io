@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="xiaogui">
 <meta property="og:description" content="这里是豆瓣电影异步爬虫的完整代码。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-22T09:24:06.059Z">
+<meta property="og:updated_time" content="2019-08-22T09:28:21.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="豆瓣电影爬虫（三）完整代码">
 <meta name="twitter:description" content="这里是豆瓣电影异步爬虫的完整代码。">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566465855601">
+  <link rel="stylesheet" href="/css/style.css?v=1566466107523">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -135,8 +135,8 @@
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
-    <a><i class="nexmoefont icon-areachart"></i>589 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>761 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
     
       <a class="nexmoefont icon-appstore-fill -link" href="/categories/学习/">学习</a>
     
@@ -148,21 +148,123 @@
     <p>这里是豆瓣电影异步爬虫的完整代码。</p>
 <a id="more"></a>
 
-<p>```<br>from urllib import parse<br>import json<br>import aiohttp<br>import asyncio<br>import requests<br>import time<br>import pymysql</p>
-<p>info = []<br>conn = None<br>cursor = None</p>
-<p>#这里的cookies必须设置</p>
-<p>headers = {<br>            ‘Referer’: ‘<a href="https://space.bilibili.com/38690046&#39;" target="_blank" rel="noopener">https://space.bilibili.com/38690046&#39;</a>,<br>            ‘User-Agent’: ‘Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36’<br>            }</p>
-<h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><p>def get_proxy():<br>    return requests.get(“<a href="http://127.0.0.1:5010/get/&quot;).text" target="_blank" rel="noopener">http://127.0.0.1:5010/get/&quot;).text</a></p>
-<p>def delete_proxy(proxy):<br>    requests.get(“<a href="http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy)" target="_blank" rel="noopener">http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy)</a>)</p>
-<h1 id="fetch函数"><a href="#fetch函数" class="headerlink" title="fetch函数"></a>fetch函数</h1><p>async def fetch(session, url):<br>    while 1:<br>        try:<br>            proxy = ‘http://‘+get_proxy()<br>            print(proxy)<br>            async with session.get(url,proxy = proxy) as response:<br>                return await response.read()<br>        except Exception:<br>            delete_proxy(proxy)</p>
-<h1 id="get函数"><a href="#get函数" class="headerlink" title="get函数"></a>get函数</h1><p>async def get_html(url,semaphore):<br>    async with semaphore:<br>        async with aiohttp.ClientSession(headers=headers) as session:<br>            html = await fetch(session, url)<br>            await parse_html(html)<br>            await asyncio.sleep(1)</p>
-<h1 id="parse函数"><a href="#parse函数" class="headerlink" title="parse函数"></a>parse函数</h1><p>async def parse_html(r):<br>    try:<br>        data = json.loads(r)[‘data’]<br>        print(data[0])<br>        info + = data<br>    except IndexError:<br>        pass</p>
-<h1 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h1><p>def connect_sql():<br>    global conn,cursor<br>    conn = pymysql.connect(<br>        host=’127.0.0.1’,<br>        port=3306,<br>        user=’root’,<br>        password=’’,<br>        database=’douban’,<br>        charset=’utf8’)<br>    # 获取一个光标<br>    cursor = conn.cursor()</p>
-<p>def save_infos():<br>    global info, conn, cursor<br>    for row in info:<br>        try:<br>            sql = ‘insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(“%s”,”%s”,”%s”,”%s”,”%s”,”%s”,”%s”,”%s”,”s”,”s”)’%(row[‘directors’],row[‘rate’],row[‘cover_x’],row[‘star’],row[‘title’],row[‘url’],row[‘casts’],row[‘cover’],row[‘id’],row[‘cover_y’])<br>            cursor.execute(sql)<br>            conn.commit()<br>        except Exception:<br>            conn.rollback()</p>
-<h1 id="获取URL"><a href="#获取URL" class="headerlink" title="获取URL"></a>获取URL</h1><p>def get_url():<br>    # type包括了全部类型<br>    type = [‘剧情’,’喜剧’,’动作’,’爱情’,’科幻’,’动画’,’悬疑’,’惊悚’,’恐怖’,’犯罪’,’同性’,’音乐’,’歌舞’,’传记’,’历史’,’战争’,’西部’,’奇幻’,’冒险’,’灾难’,’武侠’,’情色’]<br><br>    # region包括了全部地区<br>    region = [‘中国大陆’,’美国’,’中国香港’,’中国台湾’,’日本’,’韩国’,’英国’,’法国’,’德国’,’意大利’,’西班牙’,’印度’,’泰国’,’俄罗斯’,’伊朗’,’加拿大’,’澳大利亚’,’爱尔兰’,’瑞典’,’巴西’,’丹麦’]<br><br>    # 年份设置<br>    year1 = [str(i) for i in range(1960,2016,5)]<br>    year2 = [str(i) for i in range(1964,2020,5)]<br><br>    base_url = [‘<a href="https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39;" target="_blank" rel="noopener">https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39;</a> for i in range(0,1000,20)]<br><br>    # 先拼接type,得到一个长度为22x50的列表<br>    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]<br><br>    r_url = [t_url[j] + ‘&amp;countries=’ + parse.quote(i) for j in range(0,len(t_url)) for i in region]<br><br>    # 拼接年份<br>    y_url = [r_url[j] + ‘&amp;year_range=’ + year1[i] + ‘,’ + year2[i] for j in range(0,462) for i in range(0,12)]<br><br>    return y_url</p>
-<h1 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h1><p>def main():<br>    connect_sql()<br>    t = time.time()<br>    urls = get_url()<br>    print(urls[1])<br>    semaphore = asyncio.Semaphore(200)<br>    loop = asyncio.get_event_loop()<br>    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]<br>    tasks = asyncio.gather(*tasks)<br>    loop.run_until_complete(tasks)<br>    save_infos()<br>    conn.close()<br>    print(time.time()-t)</p>
-<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    main()</p>
+<pre><code>from urllib import parse
+import json
+import aiohttp
+import asyncio
+import requests
+import time
+import pymysql
 
+info = []
+conn = None
+cursor = None
+
+#这里的cookies必须设置
+
+headers = {
+            &#39;Referer&#39;: &#39;https://space.bilibili.com/38690046&#39;,
+            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36&#39;
+            }
+
+# 代理
+def get_proxy():
+    return requests.get(&quot;http://127.0.0.1:5010/get/&quot;).text
+
+def delete_proxy(proxy):
+    requests.get(&quot;http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy))
+
+# fetch函数
+async def fetch(session, url):
+    while 1:
+        try:
+            proxy = &#39;http://&#39;+get_proxy()
+            print(proxy)
+            async with session.get(url,proxy = proxy) as response:
+                return await response.read()
+        except Exception:
+            delete_proxy(proxy)
+# get函数
+async def get_html(url,semaphore):
+    async with semaphore:
+        async with aiohttp.ClientSession(headers=headers) as session:
+            html = await fetch(session, url)
+            await parse_html(html)
+            await asyncio.sleep(1)
+
+# parse函数
+async def parse_html(r):
+    try:
+        data = json.loads(r)[&#39;data&#39;]
+        print(data[0])
+        info + = data
+    except IndexError:
+        pass
+
+# 数据存储
+def connect_sql():
+    global conn,cursor
+    conn = pymysql.connect(
+        host=&#39;127.0.0.1&#39;,
+        port=3306,
+        user=&#39;root&#39;,
+        password=&#39;&#39;,
+        database=&#39;douban&#39;,
+        charset=&#39;utf8&#39;)
+    # 获取一个光标
+    cursor = conn.cursor()
+
+def save_infos():
+    global info, conn, cursor
+    for row in info:
+        try:
+            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;s&quot;,&quot;s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])
+            cursor.execute(sql)
+            conn.commit()
+        except Exception:
+            conn.rollback()
+
+# 获取URL
+def get_url():
+    # type包括了全部类型
+    type = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]
+
+    # region包括了全部地区
+    region = [&#39;中国大陆&#39;,&#39;美国&#39;,&#39;中国香港&#39;,&#39;中国台湾&#39;,&#39;日本&#39;,&#39;韩国&#39;,&#39;英国&#39;,&#39;法国&#39;,&#39;德国&#39;,&#39;意大利&#39;,&#39;西班牙&#39;,&#39;印度&#39;,&#39;泰国&#39;,&#39;俄罗斯&#39;,&#39;伊朗&#39;,&#39;加拿大&#39;,&#39;澳大利亚&#39;,&#39;爱尔兰&#39;,&#39;瑞典&#39;,&#39;巴西&#39;,&#39;丹麦&#39;]
+
+    # 年份设置
+    year1 = [str(i) for i in range(1960,2016,5)]
+    year2 = [str(i) for i in range(1964,2020,5)]
+
+    base_url = [&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39; for i in range(0,1000,20)]
+
+    # 先拼接type,得到一个长度为22x50的列表
+    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]
+
+    r_url = [t_url[j] + &#39;&amp;countries=&#39; + parse.quote(i) for j in range(0,len(t_url)) for i in region]
+
+    # 拼接年份
+    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,462) for i in range(0,12)]
+
+    return y_url
+
+# main函数
+def main():
+    connect_sql()
+    t = time.time()
+    urls = get_url()
+    print(urls[1])
+    semaphore = asyncio.Semaphore(200)
+    loop = asyncio.get_event_loop()
+    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]
+    tasks = asyncio.gather(*tasks)
+    loop.run_until_complete(tasks)
+    save_infos()
+    conn.close()
+    print(time.time()-t)
+
+if __name__ == &#39;__main__&#39;:
+    main()</code></pre>
   </article>
   
     
@@ -207,7 +309,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566465855605"></script>
+<script src="/js/app.js?v=1566466107529"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
