@@ -19,17 +19,19 @@
 <meta property="og:site_name" content="xiaogui">
 <meta property="og:description" content="豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-22T07:55:31.758Z">
+<meta property="og:image" content="http://xiaoguiwk.xyz/images/豆瓣电影爬虫（一）思路/1.jpg">
+<meta property="og:updated_time" content="2019-08-22T08:02:33.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="豆瓣电影爬虫（一）思路">
 <meta name="twitter:description" content="豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。">
+<meta name="twitter:image" content="http://xiaoguiwk.xyz/images/豆瓣电影爬虫（一）思路/1.jpg">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566460535355">
+  <link rel="stylesheet" href="/css/style.css?v=1566460959745">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -155,7 +157,7 @@
 <li><p>打开电影分类的网页得到的页面如下图：</p>
 </li>
 </ul>
-<div align="center">![豆瓣电影分类](/images/豆瓣电影爬虫（一）思路/1.jpg)</div>
+<div align="center"><img src="/images/豆瓣电影爬虫（一）思路/1.jpg" title="豆瓣电影分类"></div>
 
 <blockquote>
 <p>通过观察这个页面，可以发现这个页面基本上已经做到我想要的东西了。。。但是话说回来，我要做的是：把这个页面爬下来，再爬下来详情页面，存在数据库的两张表中，我就可以开心的练习数据库了。</p>
@@ -193,24 +195,14 @@ characteristics = [&#39;经典&#39;,&#39;青春&#39;,&#39;文艺&#39;,&#39;搞�
 <ol>
 <li>sort=U: 排序方式，可以选择以下几个：</li>
 </ol>
-<table>
-<thead>
-<tr>
-<th align="center">符号</th>
-<th align="center">U</th>
-<th align="center">S</th>
-<th align="center">T</th>
-<th align="center">R</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">含义</td>
-<td align="center">近期热门</td>
-<td align="center">评分最高</td>
-<td align="center">标记最多</td>
-<td align="center">最新上映</td>
-</tr>
-</tbody></table>
+<div align="center">
+    <font color="green">
+符号 | U | S | T | R
+</font>
+:-: | :-: | :-: | :-: | :-:
+含义 | 近期热门 | 评分最高 | 标记最多 | 最新上映
+</div>
+
 <ol start="2">
 <li>range=0,10 : 评分筛选，可以选择筛选的电影的评分区间，这里一般设置为7，10就可以筛选出来大部分好电影。有一个问题在于<strong>这里的0，10的数据类型是什么样的</strong>；</li>
 <li>tags=中国大陆： 这里的tags指的是前面设置的type；</li>
@@ -227,16 +219,19 @@ years = [&#39;2019&#39;,&#39;2018&#39;,&#39;2010年代&#39;,&#39;2000年代&#39;
 years = [str(i) for i in range(1960,2020)] + [&#39;更早&#39;]
 
 # 将需要区别对待的年份单独列出,这里区别对待了90年代所有的年份
-years = [&#39;2019&#39;,&#39;2018&#39;,&#39;2010年代&#39;,&#39;2000年代&#39;,&#39;80年代&#39;,&#39;70年代&#39;,&#39;60年代&#39;,&#39;更早&#39;] + [str(i) for i in range(1990,1999)]</code></pre><p><font color="red" size="5">但是问题出现了：我们虽然在很努力的设置年份，但是忘了一件事情。在构造URL时，接收的参数是两个而不是一个，也就是说，years这个参数，需要两个列表来完成。</font><br><font color="blue" size="5">也就是说，要写成如下形式：</font></p>
+years = [&#39;2019&#39;,&#39;2018&#39;,&#39;2010年代&#39;,&#39;2000年代&#39;,&#39;80年代&#39;,&#39;70年代&#39;,&#39;60年代&#39;,&#39;更早&#39;] + [str(i) for i in range(1990,1999)]</code></pre><p><font color="red" size="5">但是问题出现了：我们虽然在很努力的设置年份，但是忘了一件事情。在构造URL时，接收的参数是两个而不是一个，也就是说，years这个参数，需要两个列表来完成。</font></p>
+<p><font color="blue" size="5">也就是说，要写成如下形式：</font></p>
 <pre><code># 先设置前
 year1 = [&#39;2019&#39;,&#39;2018&#39;,&#39;2014&#39;,&#39;2010&#39;,&#39;2005&#39;,&#39;2000&#39;,&#39;1995&#39;,&#39;1990&#39;...]
 # 再设置后
 year2 = [&#39;2019&#39;,&#39;2018&#39;,&#39;2017&#39;,&#39;2013&#39;,&#39;2009&#39;,&#39;2004&#39;,&#39;1999&#39;,&#39;1994&#39;...]</code></pre><p>也就是说，两个需要互相对应，组成年份参数。<font color="red">比如我现在不需要特殊对待这两年，我只需要每隔五年用作一个区间就好了，那就可以用列表生成式。</font></p>
 <pre><code>year1 = [str(i) for i in range(1960,2016,5)]
 year2 = [str(i) for i in range(1964,2020,5)]</code></pre><p>生成的结果如下所示：</p>
-<blockquote>
-<p>[1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015]<br>[1964, 1969, 1974, 1979, 1984, 1989, 1994, 1999, 2004, 2009, 2014, 2019]</p>
-</blockquote>
+<div align="center">
+> [1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015]
+> [1964, 1969, 1974, 1979, 1984, 1989, 1994, 1999, 2004, 2009, 2014, 2019]
+</div>
+
 <p><strong>正好一共12个区间。</strong></p>
 <h1 id="好了现在可以生成URL了"><a href="#好了现在可以生成URL了" class="headerlink" title="好了现在可以生成URL了"></a>好了现在可以生成URL了</h1><p>现在有下面几个参数：</p>
 <ol>
@@ -355,7 +350,7 @@ y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566460535361"></script>
+<script src="/js/app.js?v=1566460959751"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
