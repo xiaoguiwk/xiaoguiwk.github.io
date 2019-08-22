@@ -3,7 +3,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
   
-  <title>Tags：pictures - xiaogui</title>
+  <title>豆瓣电影爬虫（三）数据库设计 - xiaogui</title>
   <meta charset="UTF-8">
   <meta name="description" content>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,20 +11,25 @@
   
 
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="xiaogui">
-<meta property="og:url" content="http://xiaoguiwk.xyz/tags/pictures/index.html">
+  <meta name="description" content="create database douban;  create table movie(     id int primary key not null,     title varchar(200) not null,     directors varchar(100),     star int,     rate int,     casts varchar(200),     cover">
+<meta name="keywords" content="爬虫,豆瓣,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="豆瓣电影爬虫（三）数据库设计">
+<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/index.html">
 <meta property="og:site_name" content="xiaogui">
+<meta property="og:description" content="create database douban;  create table movie(     id int primary key not null,     title varchar(200) not null,     directors varchar(100),     star int,     rate int,     casts varchar(200),     cover">
 <meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2019-08-22T11:26:24.704Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="xiaogui">
+<meta name="twitter:title" content="豆瓣电影爬虫（三）数据库设计">
+<meta name="twitter:description" content="create database douban;  create table movie(     id int primary key not null,     title varchar(200) not null,     directors varchar(100),     star int,     rate int,     casts varchar(200),     cover">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566473199710">
+  <link rel="stylesheet" href="/css/style.css?v=1566473199865">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -121,35 +126,68 @@
   </div>
   <div id="nexmoe-content">
     <div class="nexmoe-primary">
-        <section class="nexmoe-posts" id="brand-waterfall">
-    
-    <div class="nexmoe-post">
-        <a href="/2019/08/20/diamond/">
-            <div class="nexmoe-post-cover mdui-ripple"> 
-                
-                <img src="https://images2.alphacoders.com/909/909309.jpg" alt="diamond">
-                
-                <h1>diamond</h1>
-            </div>
-        </a>
-        <div class="nexmoe-post-meta">
-            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月20日</a>
-            <a><i class="nexmoefont icon-areachart"></i>4 字</a>
-            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
-            
-            
-                <a class="nexmoefont icon-tag-fill -link" href="/tags/pictures/">pictures</a>
-            
-        </div>
-        <article>
-            
-            <p>吹一波Diamond！</p>
-            
-        </article>
+        <div class="nexmoe-post">
+    <div class="nexmoe-post-cover"> 
+        
+            <img src="https://i.loli.net/2019/01/13/5c3aec85a4343.jpg">
+        
+        <h1>豆瓣电影爬虫（三）数据库设计</h1>
     </div>
+  <div class="nexmoe-post-meta">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+    <a><i class="nexmoefont icon-areachart"></i>42 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
     
-</section>
+      <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
+    
+    
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/数据库/">数据库</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
+    
+  </div>
+  <article>
+    <pre><code class="sql">create database douban;
 
+create table movie(
+    id int primary key not null,
+    title varchar(200) not null,
+    directors varchar(100),
+    star int,
+    rate int,
+    casts varchar(200),
+    cover varchar(100),
+    cover_x varchar(100),
+    cover_y varchar(100),
+    url varchar(200))default charset =utf8</code></pre>
+
+  </article>
+  
+    
+<div class="nexmoe-post-copyright">
+<i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+<strong>Author：</strong>xiaoguiwk<br>
+<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/" title="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（三）数据库设计/</a><br>
+
+  <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+</div>
+
+
+  
+  <section class="nexmoe-comment">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjE0OC8yMjY1OQ==">
+    <script id="livere-comment-js">
+    (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+       if (typeof LivereTower === 'function') { return; }
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+       e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+</section>
+</div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
@@ -165,7 +203,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566473199714"></script>
+<script src="/js/app.js?v=1566473199870"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   

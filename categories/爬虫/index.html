@@ -3,7 +3,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
   
-  <title>Tags：pictures - xiaogui</title>
+  <title>Categories：爬虫 - xiaogui</title>
   <meta charset="UTF-8">
   <meta name="description" content>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,7 +13,7 @@
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
   <meta property="og:type" content="website">
 <meta property="og:title" content="xiaogui">
-<meta property="og:url" content="http://xiaoguiwk.xyz/tags/pictures/index.html">
+<meta property="og:url" content="http://xiaoguiwk.xyz/categories/爬虫/index.html">
 <meta property="og:site_name" content="xiaogui">
 <meta property="og:locale" content="zh">
 <meta name="twitter:card" content="summary">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566473199710">
+  <link rel="stylesheet" href="/css/style.css?v=1566473199819">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -124,26 +124,122 @@
         <section class="nexmoe-posts" id="brand-waterfall">
     
     <div class="nexmoe-post">
-        <a href="/2019/08/20/diamond/">
+        <a href="/2019/08/22/豆瓣电影爬虫（三）数据库设计/">
             <div class="nexmoe-post-cover mdui-ripple"> 
                 
-                <img src="https://images2.alphacoders.com/909/909309.jpg" alt="diamond">
+                    <img src="https://i.loli.net/2019/01/13/5c3aec85a4343.jpg" alt="豆瓣电影爬虫（三）数据库设计">
                 
-                <h1>diamond</h1>
+                <h1>豆瓣电影爬虫（三）数据库设计</h1>
             </div>
         </a>
         <div class="nexmoe-post-meta">
-            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月20日</a>
-            <a><i class="nexmoefont icon-areachart"></i>4 字</a>
+            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+            <a><i class="nexmoefont icon-areachart"></i>42 字</a>
             <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
             
+                <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
             
-                <a class="nexmoefont icon-tag-fill -link" href="/tags/pictures/">pictures</a>
+            
+                <a class="nexmoefont icon-tag-fill -link" href="/tags/数据库/">数据库</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
             
         </div>
         <article>
             
-            <p>吹一波Diamond！</p>
+            <pre><code class="sql">create database douban;
+
+create table movie(
+    id int primary key not null,
+    title varchar(200) not null,
+    directors varchar(100),
+    star int,
+    rate int,
+    casts varchar(200),
+    cover varchar(100),
+    cover_x varchar(100),
+    cover_y varchar(100),
+    url varchar(200))default charset =utf8</code></pre>
+
+            
+        </article>
+    </div>
+    
+    <div class="nexmoe-post">
+        <a href="/2019/08/22/豆瓣电影爬虫（四）完整代码/">
+            <div class="nexmoe-post-cover mdui-ripple"> 
+                
+                <img src="https://images.alphacoders.com/746/746127.jpg" alt="豆瓣电影爬虫（四）完整代码">
+                
+                <h1>豆瓣电影爬虫（四）完整代码</h1>
+            </div>
+        </a>
+        <div class="nexmoe-post-meta">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+            <a><i class="nexmoefont icon-areachart"></i>761 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
+            
+                <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
+            
+            
+                <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
+            
+        </div>
+        <article>
+            
+            <p>这里是豆瓣电影异步爬虫的完整代码。</p>
+            
+        </article>
+    </div>
+    
+    <div class="nexmoe-post">
+        <a href="/2019/08/22/豆瓣电影爬虫（二）异步/">
+            <div class="nexmoe-post-cover mdui-ripple"> 
+                
+                <img src="https://images4.alphacoders.com/670/670099.jpg" alt="豆瓣电影爬虫（二）异步">
+                
+                <h1>豆瓣电影爬虫（二）异步</h1>
+            </div>
+        </a>
+        <div class="nexmoe-post-meta">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+            <a><i class="nexmoefont icon-areachart"></i>880 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
+            
+                <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
+            
+            
+                <a class="nexmoefont icon-tag-fill -link" href="/tags/异步/">异步</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
+            
+        </div>
+        <article>
+            
+            <p>异步爬虫的完整分析和思路。</p>
+            
+        </article>
+    </div>
+    
+    <div class="nexmoe-post">
+        <a href="/2019/08/22/豆瓣电影爬虫（一）思路/">
+            <div class="nexmoe-post-cover mdui-ripple"> 
+                
+                <img src="https://images7.alphacoders.com/904/904266.jpg" alt="豆瓣电影爬虫（一）思路">
+                
+                <h1>豆瓣电影爬虫（一）思路</h1>
+            </div>
+        </a>
+        <div class="nexmoe-post-meta">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+            <a><i class="nexmoefont icon-areachart"></i>2.7k 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 12 分钟</a>
+            
+                <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
+            
+            
+                <a class="nexmoefont icon-tag-fill -link" href="/tags/Markdown图片/">Markdown图片</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/Markdown字体/">Markdown字体</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/Markdown表格/">Markdown表格</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/异步/">异步</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
+            
+        </div>
+        <article>
+            
+            <p>豆瓣收录的电影数量非常大，如何尽可能多的拿到电影的编号是最大的难题。本文的思路仅仅是通过tags分类得到更多的编号，并没有拿到所有编号的解决方案。</p>
             
         </article>
     </div>
@@ -165,7 +261,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566473199714"></script>
+<script src="/js/app.js?v=1566473199823"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   

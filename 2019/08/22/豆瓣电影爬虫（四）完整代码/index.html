@@ -3,7 +3,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
   
-  <title>服务器笔记 - xiaogui</title>
+  <title>豆瓣电影爬虫（四）完整代码 - xiaogui</title>
   <meta charset="UTF-8">
   <meta name="description" content>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,25 +11,25 @@
   
 
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
-  <meta name="description" content="主要记录Linux系统在使用过程中碰到的问题及一些解决办法。包括各个有可能的方面。">
-<meta name="keywords" content="服务器,ubuntu">
+  <meta name="description" content="这里是豆瓣电影异步爬虫的完整代码。">
+<meta name="keywords" content="爬虫,豆瓣">
 <meta property="og:type" content="article">
-<meta property="og:title" content="服务器笔记">
-<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/20/服务器笔记/index.html">
+<meta property="og:title" content="豆瓣电影爬虫（四）完整代码">
+<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/index.html">
 <meta property="og:site_name" content="xiaogui">
-<meta property="og:description" content="主要记录Linux系统在使用过程中碰到的问题及一些解决办法。包括各个有可能的方面。">
+<meta property="og:description" content="这里是豆瓣电影异步爬虫的完整代码。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-20T15:59:45.403Z">
+<meta property="og:updated_time" content="2019-08-22T11:26:13.976Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="服务器笔记">
-<meta name="twitter:description" content="主要记录Linux系统在使用过程中碰到的问题及一些解决办法。包括各个有可能的方面。">
+<meta name="twitter:title" content="豆瓣电影爬虫（四）完整代码">
+<meta name="twitter:description" content="这里是豆瓣电影异步爬虫的完整代码。">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566473199639">
+  <link rel="stylesheet" href="/css/style.css?v=1566473199871">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -129,39 +129,142 @@
         <div class="nexmoe-post">
     <div class="nexmoe-post-cover"> 
         
-        <img src="https://images5.alphacoders.com/714/714548.png">
+        <img src="https://images.alphacoders.com/746/746127.jpg">
         
-        <h1>服务器笔记</h1>
+        <h1>豆瓣电影爬虫（四）完整代码</h1>
     </div>
   <div class="nexmoe-post-meta">
-    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月20日</a>
-    <a><i class="nexmoefont icon-areachart"></i>292 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月22日</a>
+    <a><i class="nexmoefont icon-areachart"></i>761 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
     
-      <a class="nexmoefont icon-appstore-fill -link" href="/categories/服务器/">服务器</a>
+      <a class="nexmoefont icon-appstore-fill -link" href="/categories/爬虫/">爬虫</a>
     
     
-      <a class="nexmoefont icon-tag-fill -link" href="/tags/ubuntu/">ubuntu</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/服务器/">服务器</a>
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/爬虫/">爬虫</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/豆瓣/">豆瓣</a>
     
   </div>
   <article>
-    <p>主要记录Linux系统在使用过程中碰到的问题及一些解决办法。包括各个有可能的方面。</p>
+    <p>这里是豆瓣电影异步爬虫的完整代码。</p>
 <a id="more"></a>
-<h1 id="连接ssh"><a href="#连接ssh" class="headerlink" title="连接ssh"></a>连接ssh</h1><ul>
-<li>输入<pre><code>ssh -p 22 root@101.200.86.233</code></pre>它会提示你输入密码,输入正确的密码之后,你就发现已经登陆成功了.(22: 端口号 root: 用户名)<h1 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h1></li>
-<li>Nohup python3 main.py &amp;，输入命令后回车退出 </li>
-<li>查看输出内容：tail -f nohup.out </li>
-<li>关闭：ps -aux | grep “users.py”查看tid，kill tid</li>
-<li>查看后台程序：jobs -l（这是L）<h1 id="screen-后台运行的最佳解决方案"><a href="#screen-后台运行的最佳解决方案" class="headerlink" title="screen,后台运行的最佳解决方案"></a>screen,后台运行的最佳解决方案</h1></li>
-<li>创建新的screen：Screen -a x    (x是名称)</li>
-<li>查看已有screen：Screen -ls </li>
-<li>Screen -x 6149 恢复pid是6149的screen</li>
-<li>screen -x user 恢复名称为user的screen</li>
-<li>screen -X -S 6149 quit 关闭</li>
-<li>或者kill 6149即可关闭<h1 id="设置交换空间"><a href="#设置交换空间" class="headerlink" title="设置交换空间"></a>设置交换空间</h1><a href="https://cloud.tencent.com/developer/article/1342505" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1342505</a><h1 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h1><pre><code>find / -name php.ini</code></pre><h1 id="vim查找字符串"><a href="#vim查找字符串" class="headerlink" title="vim查找字符串"></a>vim查找字符串</h1></li>
-<li>默认大小写敏感(可以调整)，在normal模式下：<pre><code>esc+:+/+关键字</code></pre>如：<pre><code>$ :/max</code></pre>回车即可。n查找下一个，N查找上一个；</li>
-<li>如果默认为大小写敏感，在查询语句后加\c即为忽略大小写，如：<pre><code>$ :/max\c</code></pre>即可。</li>
-</ul>
+
+<pre><code class="python">from urllib import parse
+import json
+import aiohttp
+import asyncio
+import requests
+import time
+import pymysql
+
+info = []
+conn = None
+cursor = None
+
+#这里的cookies必须设置
+
+headers = {
+            &#39;Referer&#39;: &#39;https://space.bilibili.com/38690046&#39;,
+            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36&#39;
+            }
+
+# 代理
+def get_proxy():
+    return requests.get(&quot;http://127.0.0.1:5010/get/&quot;).text
+
+def delete_proxy(proxy):
+    requests.get(&quot;http://127.0.0.1:5010/delete/?proxy={}&quot;.format(proxy))
+
+# fetch函数
+async def fetch(session, url):
+    while 1:
+        try:
+            proxy = &#39;http://&#39;+get_proxy()
+            print(proxy)
+            async with session.get(url,proxy = proxy) as response:
+                return await response.read()
+        except Exception:
+            delete_proxy(proxy)
+# get函数
+async def get_html(url,semaphore):
+    async with semaphore:
+        async with aiohttp.ClientSession(headers=headers) as session:
+            html = await fetch(session, url)
+            await parse_html(html)
+            await asyncio.sleep(1)
+
+# parse函数
+async def parse_html(r):
+    try:
+        data = json.loads(r)[&#39;data&#39;]
+        print(data[0])
+        info + = data
+    except IndexError:
+        pass
+
+# 数据存储
+def connect_sql():
+    global conn,cursor
+    conn = pymysql.connect(
+        host=&#39;127.0.0.1&#39;,
+        port=3306,
+        user=&#39;root&#39;,
+        password=&#39;&#39;,
+        database=&#39;douban&#39;,
+        charset=&#39;utf8&#39;)
+    # 获取一个光标
+    cursor = conn.cursor()
+
+def save_infos():
+    global info, conn, cursor
+    for row in info:
+        try:
+            sql = &#39;insert into movie(directors,rate,cover_x,star,title,url,casts,cover,id,cover_y) values(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;s&quot;,&quot;s&quot;)&#39;%(row[&#39;directors&#39;],row[&#39;rate&#39;],row[&#39;cover_x&#39;],row[&#39;star&#39;],row[&#39;title&#39;],row[&#39;url&#39;],row[&#39;casts&#39;],row[&#39;cover&#39;],row[&#39;id&#39;],row[&#39;cover_y&#39;])
+            cursor.execute(sql)
+            conn.commit()
+        except Exception:
+            conn.rollback()
+
+# 获取URL
+def get_url():
+    # type包括了全部类型
+    type = [&#39;剧情&#39;,&#39;喜剧&#39;,&#39;动作&#39;,&#39;爱情&#39;,&#39;科幻&#39;,&#39;动画&#39;,&#39;悬疑&#39;,&#39;惊悚&#39;,&#39;恐怖&#39;,&#39;犯罪&#39;,&#39;同性&#39;,&#39;音乐&#39;,&#39;歌舞&#39;,&#39;传记&#39;,&#39;历史&#39;,&#39;战争&#39;,&#39;西部&#39;,&#39;奇幻&#39;,&#39;冒险&#39;,&#39;灾难&#39;,&#39;武侠&#39;,&#39;情色&#39;]
+
+    # region包括了全部地区
+    region = [&#39;中国大陆&#39;,&#39;美国&#39;,&#39;中国香港&#39;,&#39;中国台湾&#39;,&#39;日本&#39;,&#39;韩国&#39;,&#39;英国&#39;,&#39;法国&#39;,&#39;德国&#39;,&#39;意大利&#39;,&#39;西班牙&#39;,&#39;印度&#39;,&#39;泰国&#39;,&#39;俄罗斯&#39;,&#39;伊朗&#39;,&#39;加拿大&#39;,&#39;澳大利亚&#39;,&#39;爱尔兰&#39;,&#39;瑞典&#39;,&#39;巴西&#39;,&#39;丹麦&#39;]
+
+    # 年份设置
+    year1 = [str(i) for i in range(1960,2016,5)]
+    year2 = [str(i) for i in range(1964,2020,5)]
+
+    base_url = [&#39;https://movie.douban.com/j/new_search_subjects?sort=T&amp;range=7,10&amp;tags=电影&amp;start=&#39;+str(i)+&#39;&amp;genres=&#39; for i in range(0,1000,20)]
+
+    # 先拼接type,得到一个长度为22x50的列表
+    t_url = [base_url[j] + parse.quote(i) for j in range(0,len(base_url)) for i in type]
+
+    r_url = [t_url[j] + &#39;&amp;countries=&#39; + parse.quote(i) for j in range(0,len(t_url)) for i in region]
+
+    # 拼接年份
+    y_url = [r_url[j] + &#39;&amp;year_range=&#39; + year1[i] + &#39;,&#39; + year2[i] for j in range(0,462) for i in range(0,12)]
+
+    return y_url
+
+# main函数
+def main():
+    connect_sql()
+    t = time.time()
+    urls = get_url()
+    print(urls[1])
+    semaphore = asyncio.Semaphore(200)
+    loop = asyncio.get_event_loop()
+    tasks = [asyncio.ensure_future(get_html(url,semaphore)) for url in urls]
+    tasks = asyncio.gather(*tasks)
+    loop.run_until_complete(tasks)
+    save_infos()
+    conn.close()
+    print(time.time()-t)
+
+if __name__ == &#39;__main__&#39;:
+    main()</code></pre>
 
   </article>
   
@@ -169,7 +272,7 @@
 <div class="nexmoe-post-copyright">
 <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
 <strong>Author：</strong>xiaoguiwk<br>
-<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/20/服务器笔记/" title="http://xiaoguiwk.xyz/2019/08/20/服务器笔记/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/20/服务器笔记/</a><br>
+<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/" title="http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/22/豆瓣电影爬虫（四）完整代码/</a><br>
 
   <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
 
@@ -207,7 +310,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566473199644"></script>
+<script src="/js/app.js?v=1566473199875"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
