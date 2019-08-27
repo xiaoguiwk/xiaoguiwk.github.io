@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="xiaogui">
 <meta property="og:description" content="在Linux下使用selenium爬虫可以忽略异步加载、浏览器跳转等，可以直接定位到元素。也可以驱动浏览器做一些自动化测试，非常方便。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-08-25T08:03:47.345Z">
+<meta property="og:updated_time" content="2019-08-27T14:34:41.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux下使用selenium">
 <meta name="twitter:description" content="在Linux下使用selenium爬虫可以忽略异步加载、浏览器跳转等，可以直接定位到元素。也可以驱动浏览器做一些自动化测试，非常方便。">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1566720231049">
+  <link rel="stylesheet" href="/css/style.css?v=1566916487655">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -214,6 +214,7 @@ def login(driver,u,p):
     time.sleep(5)
     driver.find_element_by_id(&#39;dcsignin_tips&#39;).click()
     time.sleep(5)
+    # 这里缺乏对签到表情选择和提交后的弹窗的处理
     driver.find_element_by_id(&#39;dcsignin_tips&#39;).click()
     t = driver.find_element_by_xpath(&#39;//*[@id=&quot;dcsignin&quot;]/div[1]/div[1]/div&#39;).text
     return t
@@ -417,7 +418,7 @@ if __name__ == &#39;__main__&#39;:
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1566720231056"></script>
+<script src="/js/app.js?v=1566916487663"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
   
