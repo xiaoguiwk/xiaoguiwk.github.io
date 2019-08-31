@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaoguiwk.xyz/"/>
-  <updated>2019-08-27T14:34:41.561Z</updated>
+  <updated>2019-08-31T09:01:55.368Z</updated>
   <id>http://xiaoguiwk.xyz/</id>
   
   <author>
@@ -15,6 +15,82 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>安装宝塔面板</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/31/%E5%AE%89%E8%A3%85%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/31/安装宝塔面板/</id>
+    <published>2019-08-31T08:14:06.000Z</published>
+    <updated>2019-08-31T09:01:55.368Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>装了三次了终于成功了一次。</p></blockquote><a id="more"></a><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul><li>安装命令(适用于debian)</li></ul><pre><code class="bash">$ wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh &amp;&amp; bash install.sh</code></pre><ul><li>报错(沙雕)</li></ul><pre><code>Building wheels for collected packages: cryptographyBuilding wheel for cryptography (PEP 517) ... error</code></pre><pre><code>E: Unable to correct problems, you have held broken packages</code></pre><p>解决：</p><pre><code class="bash">$ aptitude install xxx</code></pre><blockquote><p>aptitude与 apt-get 一样，是 Debian 及其衍生系统中功能极其强大的包管理工具。与 apt-get 不同的是，aptitude在处理依赖问题上更佳一些。举例来说，aptitude在删除一个包时，会同时删除本身所依赖的包。这样，系统中不会残留无用的包，整个系统更为干净。</p></blockquote><h1 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h1><ul><li>安装位置：</li></ul><blockquote><p>/www</p></blockquote><ul><li>安装完成后会输出内容如下：</li></ul><pre><code class="bash">Congratulations! Install succeeded!==================================================================Bt-Panel: http://173.*.*.*:8888/d0ed9cf3username: 2s3kafxipassword: a03cf634Warning:If you cannot access the panel, release the following port (8888|888|80|443|20|21) in the security group==================================================================Time consumed: 2 Minute!</code></pre><p>还是不行</p><hr><h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><ul><li><p>上面都是debian7，安装宝塔当然一堆事情；</p></li><li><p>官方推荐debian最低要求debian9；</p></li><li><p>查看系统版本：</p></li></ul><pre><code class="bash">$ cat /etc/issue</code></pre><ul><li>重装系统debian9,屁事没有。</li></ul><pre><code>Congratulations! Install succeeded!==================================================================Bt-Panel: http://173.***.***.***:8888/be53cc30username: password: Warning:If you cannot access the panel, release the following port (8888|888|80|443|20|21) in the security group==================================================================Time consumed: 4 Minute!</code></pre><ul><li><font color="red">注意防火墙</font></li></ul><blockquote><p>宝塔面板会帮你安装ufw并打开需要的端口，但不会打开ssh需要的22.</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;装了三次了终于成功了一次。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://xiaoguiwk.xyz/categories/Linux/"/>
+    
+    
+      <category term="宝塔" scheme="http://xiaoguiwk.xyz/tags/%E5%AE%9D%E5%A1%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树莓派搭建plex服务器</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/30/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BAplex%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/30/树莓派搭建plex服务器/</id>
+    <published>2019-08-30T15:14:06.000Z</published>
+    <updated>2019-08-31T09:00:40.567Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>虽然没什么用，但也不枉我熬夜硬抗。现在的效果的能用，但估计只能看个国**拍之类的视频和浏览一些照片了。ps:本文结合frp内网穿透食用更佳。</p></blockquote><a id="more"></a><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul><li>在<a href="https://www.plex.tv/media-server-downloads/" target="_blank" rel="noopener">plex官网</a>找到最新版本，主要树莓派是arm架构，要下载armhf版本；</li></ul><pre><code class="bash">$ wget https://downloads.plex.tv/plex-media-server/1.5.5.3634-995f1dead/plexmediaserver_1.5.5.3634-995f1dead_armhf.deb</code></pre><ul><li>安装(这里使用了通配符)</li></ul><pre><code class="bash">$ dpkg -i plexmediaserver*.deb</code></pre><ul><li>启动</li></ul><pre><code class="bash">$ systemctl enable plexmediaserver.service$ systemctl start plexmediaserver.service</code></pre><ul><li>查看状态</li></ul><pre><code class="bash">$ systemctl status plexmediaserver</code></pre><h1 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h1><ul><li>安装完成后在本机（树莓派）打开浏览器访问<a href="http://127.0.0.1:32400" target="_blank" rel="noopener">http://127.0.0.1:32400</a> 即可访问，但有问题；</li></ul><ol><li><p>This XML file does not appear to have any style information associated with it..</p></li><li><p>如果没有图形界面如何访问；</p></li></ol><ul><li>问题解决：</li></ul><ol><li>这种情况是没有权限导致，找到plexmediaserver：</li></ol><pre><code class="bash">$ find / -name plexmediaserver</code></pre><p>输出如下：</p><pre><code>/var/lib/plexmediaserver/usr/share/doc/plexmediaserver/usr/lib/plexmediaserverfind: ‘/proc/sys/fs/binfmt_misc’: No such devicefind: ‘/proc/14925’: No such file or directoryfind: ‘/proc/14931’: No such file or directoryfind: ‘/proc/21723/task/21723/net’: Invalid argumentfind: ‘/proc/21723/net’: Invalid argumentfind: ‘/run/user/1000/gvfs’: Permission denied/etc/default/plexmediaserver</code></pre><p>逐一排查，发现文件主要在/usr/lib/plexmediaserver中，进入文件夹，进行授权：</p><pre><code class="bash">$ chown plex:plex -R *$ chmod 777 *</code></pre><blockquote><p>ps: /var/lib/plexmediaserver/Library用来存储资源，也可以自定义。</p></blockquote><ol start="2"><li>客户机访问</li></ol><p>首先设置端口：</p><pre><code class="bash">$ ufw allow 32400$ ufw allow 8888 # 我也不知道有没有关系</code></pre><p>由于plex首次访问禁止了远程访问，因此需要在客户机开启ssh隧道代理进行访问：</p><pre><code class="bash">$ ssh root@树莓派ip -L 8888:localhost:32400</code></pre><p>打开代理隧道后不要关闭，打开浏览器访问<a href="http://127.0.0.1:8888" target="_blank" rel="noopener">http://127.0.0.1:8888</a>; 这时应该能进入服务器设着界面了。</p><p><img src="/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BAplex%E6%9C%8D%E5%8A%A1%E5%99%A8/plex.jpg" alt="plex"></p><h1 id="硬盘挂载"><a href="#硬盘挂载" class="headerlink" title="硬盘挂载"></a>硬盘挂载</h1><ul><li>安装NTFS驱动</li></ul><pre><code class="bash">$ sudo apt-get intall ntfs-3g</code></pre><ul><li>查看NFTS分区信息</li></ul><pre><code class="bash">$ fdisk -l|grep NTFS</code></pre><p>输出</p><pre><code>/dev/sdc1 * 1 244 1955776+ 7 HPFS/NTFS </code></pre><ul><li>设置挂载点</li></ul><pre><code class="bash"># 创建挂载目录$ mkdir /root/ntfs# 挂载命令$ mount -t ntfs-3g /dev/sdc1 /root/ntfs# 卸载$ umount /root/ntfs# 或者$ umount /dev/sdc1</code></pre><ul><li>可以设置开机自动挂载，但有问题：</li></ul><blockquote><p>如果不小心把掉硬盘，开机时找不到硬盘会无法开机</p></blockquote><ul><li>权限设置</li></ul><pre><code class="bash">$ chmod 777 /root/ntfs</code></pre><h1 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h1><ol><li>授权<br>两个方面：将/var/lib/plexmediaserver/Library设为plex用户；<br>给硬盘授权</li><li>客户机访问的ssh隧道</li><li>Ubuntu默认屏蔽掉了root用户的直接登录权限，需要修改：</li></ol><pre><code class="bash"># 修改ssh配置$ vim /etc/ssh/sshd_config:/PermitRootLoginPermitRootLogin yes:/wq# 不用管后面是什么直接注释掉改成yes# 重启ssh服务$ service ssh restart</code></pre><h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><ul><li>plex会跑满树莓派，基本上其他事情干不了了；</li><li>plex远程长视频播放要充钱；</li><li>plex匹配的字幕都是外语，看不懂；</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;虽然没什么用，但也不枉我熬夜硬抗。现在的效果的能用，但估计只能看个国**拍之类的视频和浏览一些照片了。ps:本文结合frp内网穿透食用更佳。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="NAS" scheme="http://xiaoguiwk.xyz/categories/NAS/"/>
+    
+    
+      <category term="plex" scheme="http://xiaoguiwk.xyz/tags/plex/"/>
+    
+      <category term="树莓派" scheme="http://xiaoguiwk.xyz/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>frp内网穿透</title>
+    <link href="http://xiaoguiwk.xyz/2019/08/29/frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    <id>http://xiaoguiwk.xyz/2019/08/29/frp内网穿透/</id>
+    <published>2019-08-29T06:37:59.000Z</published>
+    <updated>2019-08-31T09:04:23.479Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>内网穿透的解决方案之一，特别简单。</p></blockquote><a id="more"></a><h1 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h1><ul><li>下载</li></ul><pre><code>$ wget https://github.com/fatedier/frp/releases/download/v0.28.2/frp_0.28.2_linux_amd64.tar.gz</code></pre><ul><li>解压</li></ul><pre><code>$ tar -zxf frp_0.28.2_linux_amd64.tar.gz</code></pre><ul><li>解压后得到文件</li></ul><pre><code>$ ll---drwxrwxr-x 3 www  www      4096 Aug  9 12:58 ./drwxr-xr-x 3 root root     4096 Aug 29 18:58 ../-rwxrwxr-x 1 www  www  10725216 Aug  9 12:55 frpc*-rw-rw-r-- 1 www  www      6820 Aug  9 12:58 frpc_full.ini-rw-rw-r-- 1 www  www       126 Aug  9 12:58 frpc.ini-rwxrwxr-x 1 www  www  11456096 Aug  9 12:55 frps*-rw-rw-r-- 1 www  www      2274 Aug  9 12:58 frps_full.ini-rw-rw-r-- 1 www  www        26 Aug  9 12:58 frps.ini-rw-rw-r-- 1 www  www     11358 Aug  9 12:58 LICENSEdrwxrwxr-x 2 www  www      4096 Aug  9 12:58 systemd/</code></pre><ul><li>查看配置文件内容</li></ul><pre><code class="bash">$ cat frps.ini--- 这是服务器端需要的配置文件[common]bind_port = 7000 #这是服务器与客户端通信的端口  </code></pre><ul><li>启动frp服务(后台启动)</li></ul><pre><code>$ nohup ./frps -c ./frps.ini &amp;</code></pre><h1 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h1><ul><li>树莓派下载(注意树莓派由于CPU结构，和服务器安装版本不同)</li></ul><pre><code>$ wget https://github.com/fatedier/frp/releases/download/v0.28.2/frp_0.28.2_linux_arm.tar.gz</code></pre><ul><li>树莓派配置</li></ul><pre><code class="bash">$ vim frpc.ini---[common]server_addr = xxx.xxx.xxx.xxx # 服务器IP地址server_port = 7000            # 与服务器绑定的端口号[ssh]type = tcplocal_ip = 127.0.0.1      # 树莓派的局域网IP，本机即可设置为localhostlocal_port = 22               # 本机端口remote_port = 6000            # 外网访问的端口</code></pre><ul><li>端口设置</li></ul><ol><li><p>打开服务器端口7000和6000;</p></li><li><p>打开树莓派7000和6000;</p></li><li><p>设置服务器安全组7000和6000。</p></li></ol><h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote><p><a href="https://blog.csdn.net/Meteor_s/article/details/80996737" target="_blank" rel="noopener">https://blog.csdn.net/Meteor_s/article/details/80996737</a><br><a href="https://blog.csdn.net/u013144287/article/details/78589643/" target="_blank" rel="noopener">https://blog.csdn.net/u013144287/article/details/78589643/</a><br><a href="https://github.com/fatedier/frp/blob/master/README_zh.md" target="_blank" rel="noopener">https://github.com/fatedier/frp/blob/master/README_zh.md</a><br><a href="https://www.jianshu.com/p/a6e9627dbe29" target="_blank" rel="noopener">https://www.jianshu.com/p/a6e9627dbe29</a><br><a href="https://blog.csdn.net/m0_37499059/article/details/79587771" target="_blank" rel="noopener">https://blog.csdn.net/m0_37499059/article/details/79587771</a><br><a href="https://www.imooc.com/article/72503" target="_blank" rel="noopener">https://www.imooc.com/article/72503</a><br><a href="https://baijiahao.baidu.com/s?id=1623434266517055314&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">https://baijiahao.baidu.com/s?id=1623434266517055314&amp;wfr=spider&amp;for=pc</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;内网穿透的解决方案之一，特别简单。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="http://xiaoguiwk.xyz/categories/linux/"/>
+    
+    
+      <category term="frp" scheme="http://xiaoguiwk.xyz/tags/frp/"/>
+    
+      <category term="内网穿透" scheme="http://xiaoguiwk.xyz/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>linux下使用selenium</title>

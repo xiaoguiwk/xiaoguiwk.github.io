@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+  <title>frp内网穿透 - xiaogui</title>
+  <meta charset="UTF-8">
+  <meta name="description" content>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
+  <meta name="description" content="内网穿透的解决方案之一，特别简单。">
+<meta name="keywords" content="frp,内网穿透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="frp内网穿透">
+<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/29/frp内网穿透/index.html">
+<meta property="og:site_name" content="xiaogui">
+<meta property="og:description" content="内网穿透的解决方案之一，特别简单。">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2019-08-31T09:04:23.479Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="frp内网穿透">
+<meta name="twitter:description" content="内网穿透的解决方案之一，特别简单。">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
+  <link rel="stylesheet" href="/css/style.css?v=1567242273743">
+</head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://i.loli.net/2019/01/13/5c3aec85a4343.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="xiaoguiwk" class="mdui-btn mdui-btn-icon"><img src="/images/avatar.png"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="xiaoguiwk">
+            <img src="/images/avatar.png" alt="xiaoguiwk">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>15</div>
+        <div><span>Tags</span>21</div>
+        <div><span>Categories</span>6</div>
+    </div>
+    <ul class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+    </ul>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Social</h3>
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/14039625" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/xiaoguiwk/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NAS/">NAS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器/">服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Tagcloud</h3>
+    <div class="nexmoe-widget tagcloud">
+      <a href="/tags/Markdown图片/" style="font-size: 10px;">Markdown图片</a> <a href="/tags/Markdown字体/" style="font-size: 10px;">Markdown字体</a> <a href="/tags/Markdown表格/" style="font-size: 10px;">Markdown表格</a> <a href="/tags/Scarpy/" style="font-size: 10px;">Scarpy</a> <a href="/tags/frp/" style="font-size: 10px;">frp</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/pictures/" style="font-size: 10px;">pictures</a> <a href="/tags/plex/" style="font-size: 10px;">plex</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/themes/" style="font-size: 10px;">themes</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/内网穿透/" style="font-size: 10px;">内网穿透</a> <a href="/tags/宝塔/" style="font-size: 10px;">宝塔</a> <a href="/tags/异步/" style="font-size: 15px;">异步</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/爬虫/" style="font-size: 20px;">爬虫</a> <a href="/tags/环境配置/" style="font-size: 10px;">环境配置</a> <a href="/tags/豆瓣/" style="font-size: 20px;">豆瓣</a>
+    </div>
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Archive</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2019 xiaoguiwk
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://nexmoe.com/hexo-theme-nexmoe.html" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+    <div class="nexmoe-post-cover"> 
+        
+        <img src="https://images6.alphacoders.com/644/644063.png">
+        
+        <h1>frp内网穿透</h1>
+    </div>
+  <div class="nexmoe-post-meta">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月29日</a>
+    <a><i class="nexmoefont icon-areachart"></i>433 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 2 分钟</a>
+    
+      <a class="nexmoefont icon-appstore-fill -link" href="/categories/linux/">linux</a>
+    
+    
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/frp/">frp</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/内网穿透/">内网穿透</a>
+    
+  </div>
+  <article>
+    <blockquote>
+<p>内网穿透的解决方案之一，特别简单。</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h1><ul>
+<li>下载</li>
+</ul>
+<pre><code>$ wget https://github.com/fatedier/frp/releases/download/v0.28.2/frp_0.28.2_linux_amd64.tar.gz</code></pre><ul>
+<li>解压</li>
+</ul>
+<pre><code>$ tar -zxf frp_0.28.2_linux_amd64.tar.gz</code></pre><ul>
+<li>解压后得到文件</li>
+</ul>
+<pre><code>$ ll
+---
+drwxrwxr-x 3 www  www      4096 Aug  9 12:58 ./
+drwxr-xr-x 3 root root     4096 Aug 29 18:58 ../
+-rwxrwxr-x 1 www  www  10725216 Aug  9 12:55 frpc*
+-rw-rw-r-- 1 www  www      6820 Aug  9 12:58 frpc_full.ini
+-rw-rw-r-- 1 www  www       126 Aug  9 12:58 frpc.ini
+-rwxrwxr-x 1 www  www  11456096 Aug  9 12:55 frps*
+-rw-rw-r-- 1 www  www      2274 Aug  9 12:58 frps_full.ini
+-rw-rw-r-- 1 www  www        26 Aug  9 12:58 frps.ini
+-rw-rw-r-- 1 www  www     11358 Aug  9 12:58 LICENSE
+drwxrwxr-x 2 www  www      4096 Aug  9 12:58 systemd/</code></pre><ul>
+<li>查看配置文件内容</li>
+</ul>
+<pre><code class="bash">$ cat frps.ini
+--- 这是服务器端需要的配置文件
+[common]
+bind_port = 7000 #这是服务器与客户端通信的端口  </code></pre>
+<ul>
+<li>启动frp服务(后台启动)</li>
+</ul>
+<pre><code>$ nohup ./frps -c ./frps.ini &amp;</code></pre><h1 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h1><ul>
+<li>树莓派下载(注意树莓派由于CPU结构，和服务器安装版本不同)</li>
+</ul>
+<pre><code>$ wget https://github.com/fatedier/frp/releases/download/v0.28.2/frp_0.28.2_linux_arm.tar.gz</code></pre><ul>
+<li>树莓派配置</li>
+</ul>
+<pre><code class="bash">$ vim frpc.ini
+---
+[common]
+server_addr = xxx.xxx.xxx.xxx # 服务器IP地址
+server_port = 7000            # 与服务器绑定的端口号
+
+[ssh]
+type = tcp
+local_ip = 127.0.0.1      # 树莓派的局域网IP，本机即可设置为localhost
+local_port = 22               # 本机端口
+remote_port = 6000            # 外网访问的端口</code></pre>
+<ul>
+<li>端口设置</li>
+</ul>
+<ol>
+<li><p>打开服务器端口7000和6000;</p>
+</li>
+<li><p>打开树莓派7000和6000;</p>
+</li>
+<li><p>设置服务器安全组7000和6000。</p>
+</li>
+</ol>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
+<p><a href="https://blog.csdn.net/Meteor_s/article/details/80996737" target="_blank" rel="noopener">https://blog.csdn.net/Meteor_s/article/details/80996737</a><br><a href="https://blog.csdn.net/u013144287/article/details/78589643/" target="_blank" rel="noopener">https://blog.csdn.net/u013144287/article/details/78589643/</a><br><a href="https://github.com/fatedier/frp/blob/master/README_zh.md" target="_blank" rel="noopener">https://github.com/fatedier/frp/blob/master/README_zh.md</a><br><a href="https://www.jianshu.com/p/a6e9627dbe29" target="_blank" rel="noopener">https://www.jianshu.com/p/a6e9627dbe29</a><br><a href="https://blog.csdn.net/m0_37499059/article/details/79587771" target="_blank" rel="noopener">https://blog.csdn.net/m0_37499059/article/details/79587771</a><br><a href="https://www.imooc.com/article/72503" target="_blank" rel="noopener">https://www.imooc.com/article/72503</a><br><a href="https://baijiahao.baidu.com/s?id=1623434266517055314&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">https://baijiahao.baidu.com/s?id=1623434266517055314&amp;wfr=spider&amp;for=pc</a></p>
+</blockquote>
+
+  </article>
+  
+    
+<div class="nexmoe-post-copyright">
+<i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+<strong>Author：</strong>xiaoguiwk<br>
+<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/29/frp内网穿透/" title="http://xiaoguiwk.xyz/2019/08/29/frp内网穿透/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/29/frp内网穿透/</a><br>
+
+  <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+</div>
+
+
+  
+  <section class="nexmoe-comment">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjE0OC8yMjY1OQ==">
+    <script id="livere-comment-js">
+    (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+       if (typeof LivereTower === 'function') { return; }
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+       e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+</section>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+ 
+    <script src="https://cdn.jsdelivr.net/npm/smoothscroll-for-websites@1.4.9/SmoothScroll.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="/js/app.js?v=1567242273754"></script>
+<script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
+
+  
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?db88102c4b9c7df28e3024879cee4497';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>

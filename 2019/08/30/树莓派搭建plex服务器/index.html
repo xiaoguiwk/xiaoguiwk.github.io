@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+  <title>树莓派搭建plex服务器 - xiaogui</title>
+  <meta charset="UTF-8">
+  <meta name="description" content>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/png">
+  <meta name="description" content="虽然没什么用，但也不枉我熬夜硬抗。现在的效果的能用，但估计只能看个国**拍之类的视频和浏览一些照片了。ps:本文结合frp内网穿透食用更佳。">
+<meta name="keywords" content="plex,树莓派">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派搭建plex服务器">
+<meta property="og:url" content="http://xiaoguiwk.xyz/2019/08/30/树莓派搭建plex服务器/index.html">
+<meta property="og:site_name" content="xiaogui">
+<meta property="og:description" content="虽然没什么用，但也不枉我熬夜硬抗。现在的效果的能用，但估计只能看个国**拍之类的视频和浏览一些照片了。ps:本文结合frp内网穿透食用更佳。">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="http://xiaoguiwk.xyz/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BAplex%E6%9C%8D%E5%8A%A1%E5%99%A8/plex.jpg">
+<meta property="og:updated_time" content="2019-08-31T09:00:40.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树莓派搭建plex服务器">
+<meta name="twitter:description" content="虽然没什么用，但也不枉我熬夜硬抗。现在的效果的能用，但估计只能看个国**拍之类的视频和浏览一些照片了。ps:本文结合frp内网穿透食用更佳。">
+<meta name="twitter:image" content="http://xiaoguiwk.xyz/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BAplex%E6%9C%8D%E5%8A%A1%E5%99%A8/plex.jpg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
+  <link rel="stylesheet" href="/css/style.css?v=1567242273756">
+</head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://i.loli.net/2019/01/13/5c3aec85a4343.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="xiaoguiwk" class="mdui-btn mdui-btn-icon"><img src="/images/avatar.png"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="xiaoguiwk">
+            <img src="/images/avatar.png" alt="xiaoguiwk">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>15</div>
+        <div><span>Tags</span>21</div>
+        <div><span>Categories</span>6</div>
+    </div>
+    <ul class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+    </ul>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Social</h3>
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/14039625" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/xiaoguiwk/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NAS/">NAS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器/">服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Tagcloud</h3>
+    <div class="nexmoe-widget tagcloud">
+      <a href="/tags/Markdown图片/" style="font-size: 10px;">Markdown图片</a> <a href="/tags/Markdown字体/" style="font-size: 10px;">Markdown字体</a> <a href="/tags/Markdown表格/" style="font-size: 10px;">Markdown表格</a> <a href="/tags/Scarpy/" style="font-size: 10px;">Scarpy</a> <a href="/tags/frp/" style="font-size: 10px;">frp</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/pictures/" style="font-size: 10px;">pictures</a> <a href="/tags/plex/" style="font-size: 10px;">plex</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/themes/" style="font-size: 10px;">themes</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/内网穿透/" style="font-size: 10px;">内网穿透</a> <a href="/tags/宝塔/" style="font-size: 10px;">宝塔</a> <a href="/tags/异步/" style="font-size: 15px;">异步</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/爬虫/" style="font-size: 20px;">爬虫</a> <a href="/tags/环境配置/" style="font-size: 10px;">环境配置</a> <a href="/tags/豆瓣/" style="font-size: 20px;">豆瓣</a>
+    </div>
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Archive</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2019 xiaoguiwk
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://nexmoe.com/hexo-theme-nexmoe.html" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+    <div class="nexmoe-post-cover"> 
+        
+        <img src="https://images3.alphacoders.com/714/714324.png">
+        
+        <h1>树莓派搭建plex服务器</h1>
+    </div>
+  <div class="nexmoe-post-meta">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年08月30日</a>
+    <a><i class="nexmoefont icon-areachart"></i>684 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
+    
+      <a class="nexmoefont icon-appstore-fill -link" href="/categories/NAS/">NAS</a>
+    
+    
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/plex/">plex</a> <a class="nexmoefont icon-tag-fill -link" href="/tags/树莓派/">树莓派</a>
+    
+  </div>
+  <article>
+    <blockquote>
+<p>虽然没什么用，但也不枉我熬夜硬抗。现在的效果的能用，但估计只能看个国**拍之类的视频和浏览一些照片了。ps:本文结合frp内网穿透食用更佳。</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li>在<a href="https://www.plex.tv/media-server-downloads/" target="_blank" rel="noopener">plex官网</a>找到最新版本，主要树莓派是arm架构，要下载armhf版本；</li>
+</ul>
+<pre><code class="bash">$ wget https://downloads.plex.tv/plex-media-server/1.5.5.3634-995f1dead/plexmediaserver_1.5.5.3634-995f1dead_armhf.deb</code></pre>
+<ul>
+<li>安装(这里使用了通配符)</li>
+</ul>
+<pre><code class="bash">$ dpkg -i plexmediaserver*.deb</code></pre>
+<ul>
+<li>启动</li>
+</ul>
+<pre><code class="bash">$ systemctl enable plexmediaserver.service
+$ systemctl start plexmediaserver.service</code></pre>
+<ul>
+<li>查看状态</li>
+</ul>
+<pre><code class="bash">$ systemctl status plexmediaserver</code></pre>
+<h1 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h1><ul>
+<li>安装完成后在本机（树莓派）打开浏览器访问<a href="http://127.0.0.1:32400" target="_blank" rel="noopener">http://127.0.0.1:32400</a> 即可访问，但有问题；</li>
+</ul>
+<ol>
+<li><p>This XML file does not appear to have any style information associated with it..</p>
+</li>
+<li><p>如果没有图形界面如何访问；</p>
+</li>
+</ol>
+<ul>
+<li>问题解决：</li>
+</ul>
+<ol>
+<li>这种情况是没有权限导致，找到plexmediaserver：</li>
+</ol>
+<pre><code class="bash">$ find / -name plexmediaserver</code></pre>
+<p>输出如下：</p>
+<pre><code>/var/lib/plexmediaserver
+/usr/share/doc/plexmediaserver
+/usr/lib/plexmediaserver
+find: ‘/proc/sys/fs/binfmt_misc’: No such device
+find: ‘/proc/14925’: No such file or directory
+find: ‘/proc/14931’: No such file or directory
+find: ‘/proc/21723/task/21723/net’: Invalid argument
+find: ‘/proc/21723/net’: Invalid argument
+find: ‘/run/user/1000/gvfs’: Permission denied
+/etc/default/plexmediaserver</code></pre><p>逐一排查，发现文件主要在/usr/lib/plexmediaserver中，进入文件夹，进行授权：</p>
+<pre><code class="bash">$ chown plex:plex -R *
+$ chmod 777 *</code></pre>
+<blockquote>
+<p>ps: /var/lib/plexmediaserver/Library用来存储资源，也可以自定义。</p>
+</blockquote>
+<ol start="2">
+<li>客户机访问</li>
+</ol>
+<p>首先设置端口：</p>
+<pre><code class="bash">$ ufw allow 32400
+$ ufw allow 8888 # 我也不知道有没有关系</code></pre>
+<p>由于plex首次访问禁止了远程访问，因此需要在客户机开启ssh隧道代理进行访问：</p>
+<pre><code class="bash">$ ssh root@树莓派ip -L 8888:localhost:32400</code></pre>
+<p>打开代理隧道后不要关闭，打开浏览器访问<a href="http://127.0.0.1:8888" target="_blank" rel="noopener">http://127.0.0.1:8888</a>; 这时应该能进入服务器设着界面了。</p>
+<p><img src="/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BAplex%E6%9C%8D%E5%8A%A1%E5%99%A8/plex.jpg" alt="plex"></p>
+<h1 id="硬盘挂载"><a href="#硬盘挂载" class="headerlink" title="硬盘挂载"></a>硬盘挂载</h1><ul>
+<li>安装NTFS驱动</li>
+</ul>
+<pre><code class="bash">$ sudo apt-get intall ntfs-3g</code></pre>
+<ul>
+<li>查看NFTS分区信息</li>
+</ul>
+<pre><code class="bash">$ fdisk -l|grep NTFS</code></pre>
+<p>输出</p>
+<pre><code>/dev/sdc1 * 1 244 1955776+ 7 HPFS/NTFS </code></pre><ul>
+<li>设置挂载点</li>
+</ul>
+<pre><code class="bash"># 创建挂载目录
+$ mkdir /root/ntfs
+# 挂载命令
+$ mount -t ntfs-3g /dev/sdc1 /root/ntfs
+# 卸载
+$ umount /root/ntfs
+# 或者
+$ umount /dev/sdc1</code></pre>
+<ul>
+<li>可以设置开机自动挂载，但有问题：</li>
+</ul>
+<blockquote>
+<p>如果不小心把掉硬盘，开机时找不到硬盘会无法开机</p>
+</blockquote>
+<ul>
+<li>权限设置</li>
+</ul>
+<pre><code class="bash">$ chmod 777 /root/ntfs</code></pre>
+<h1 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h1><ol>
+<li>授权<br>两个方面：将/var/lib/plexmediaserver/Library设为plex用户；<br>给硬盘授权</li>
+<li>客户机访问的ssh隧道</li>
+<li>Ubuntu默认屏蔽掉了root用户的直接登录权限，需要修改：</li>
+</ol>
+<pre><code class="bash"># 修改ssh配置
+$ vim /etc/ssh/sshd_config
+:/PermitRootLogin
+PermitRootLogin yes
+:/wq
+# 不用管后面是什么直接注释掉改成yes
+# 重启ssh服务
+$ service ssh restart</code></pre>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><ul>
+<li>plex会跑满树莓派，基本上其他事情干不了了；</li>
+<li>plex远程长视频播放要充钱；</li>
+<li>plex匹配的字幕都是外语，看不懂；</li>
+</ul>
+
+  </article>
+  
+    
+<div class="nexmoe-post-copyright">
+<i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+<strong>Author：</strong>xiaoguiwk<br>
+<strong>Link：</strong><a href="http://xiaoguiwk.xyz/2019/08/30/树莓派搭建plex服务器/" title="http://xiaoguiwk.xyz/2019/08/30/树莓派搭建plex服务器/" target="_blank" rel="noopener">http://xiaoguiwk.xyz/2019/08/30/树莓派搭建plex服务器/</a><br>
+
+  <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+</div>
+
+
+  
+  <section class="nexmoe-comment">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjE0OC8yMjY1OQ==">
+    <script id="livere-comment-js">
+    (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+       if (typeof LivereTower === 'function') { return; }
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+       e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+</section>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+ 
+    <script src="https://cdn.jsdelivr.net/npm/smoothscroll-for-websites@1.4.9/SmoothScroll.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="/js/app.js?v=1567242273761"></script>
+<script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
+
+  
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?db88102c4b9c7df28e3024879cee4497';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
